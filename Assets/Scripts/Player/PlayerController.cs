@@ -18,6 +18,10 @@ public class PlayerController : MonoBehaviour
 
     private bool estaEnSuelo = true;
 
+    // Controles táctiles
+    private bool botonIzquierdaPresionado = false;
+    private bool botonDerechaPresionado = false;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -27,28 +31,41 @@ public class PlayerController : MonoBehaviour
     {
         movimientoHorizontal = 0f;
 
-        if (Keyboard.current == null)
-            return;
+        bool izquierdaTeclado = false;
+        bool derechaTeclado = false;
 
-        // Movimiento izquierda
-        if (Keyboard.current.aKey.isPressed ||
-            Keyboard.current.leftArrowKey.isPressed)
+        // Controles de teclado para pruebas en PC
+        if (Keyboard.current != null)
+        {
+            izquierdaTeclado =
+                Keyboard.current.aKey.isPressed ||
+                Keyboard.current.leftArrowKey.isPressed;
+
+            derechaTeclado =
+                Keyboard.current.dKey.isPressed ||
+                Keyboard.current.rightArrowKey.isPressed;
+
+            if (Keyboard.current.spaceKey.wasPressedThisFrame &&
+                estaEnSuelo)
+            {
+                Saltar();
+            }
+        }
+
+        // Teclado + botones táctiles
+        bool moverIzquierda =
+            izquierdaTeclado || botonIzquierdaPresionado;
+
+        bool moverDerecha =
+            derechaTeclado || botonDerechaPresionado;
+
+        if (moverIzquierda && !moverDerecha)
         {
             movimientoHorizontal = -1f;
         }
-
-        // Movimiento derecha
-        if (Keyboard.current.dKey.isPressed ||
-            Keyboard.current.rightArrowKey.isPressed)
+        else if (moverDerecha && !moverIzquierda)
         {
             movimientoHorizontal = 1f;
-        }
-
-        // Salto
-        if (Keyboard.current.spaceKey.wasPressedThisFrame &&
-            estaEnSuelo)
-        {
-            Saltar();
         }
     }
 
@@ -71,9 +88,25 @@ public class PlayerController : MonoBehaviour
         transform.position = posicionActual;
     }
 
-    void Saltar()
+    public void MoverIzquierda(bool presionado)
     {
-        rb.AddForce(Vector3.up * fuerzaSalto, ForceMode.Impulse);
+        botonIzquierdaPresionado = presionado;
+    }
+
+    public void MoverDerecha(bool presionado)
+    {
+        botonDerechaPresionado = presionado;
+    }
+
+    public void Saltar()
+    {
+        if (!estaEnSuelo)
+            return;
+
+        rb.AddForce(
+            Vector3.up * fuerzaSalto,
+            ForceMode.Impulse
+        );
 
         estaEnSuelo = false;
     }
