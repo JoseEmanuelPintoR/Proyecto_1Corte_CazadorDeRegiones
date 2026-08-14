@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 4859539164985971307}
   - component: {fileID: 7092838554986788035}
   - component: {fileID: 5796655316072619555}
+  - component: {fileID: 8496277860930533995}
   m_Layer: 0
-  m_Name: ObjetoCorrecto
+  m_Name: 5Marimba_Orinoquia
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,7 +70,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e62e3c35405e518488931dca54bdfe7f, type: 2}
+  - {fileID: 2100000, guid: 178288456923b4c48828fa602be65259, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -105,7 +106,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7e62859648500c498cb37659020b32b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoCaida
-  tipoObjeto: 0
+  tipoObjeto: 1
+  velocidadMaximaPowerUp: 2
+  factorGravedadPowerUp: 0.25
 --- !u!135 &7092838554986788035
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -154,3 +157,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
+--- !u!114 &8496277860930533995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6007143426940250307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd415d41b0975634186c18fd98fd0559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RafagaHorizontal
+  fuerzaMinima: 0.5
+  fuerzaMaxima: 1.5
+  tiempoMinimo: 0.8
+  tiempoMaximo: 1.8

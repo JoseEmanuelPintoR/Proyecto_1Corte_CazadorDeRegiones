@@ -1409,7 +1409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   puntos: 0
-  puntosObjetivo: 1000
+  puntosObjetivo: 1800
   vidas: 3
   cargaPowerUp: 0
   cargaMaxima: 3
@@ -1757,10 +1757,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1173be9a2bbf54478c442314aaff6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnerObjetos
-  objetoCorrectoPrefab: {fileID: 6007143426940250307, guid: 77dbf50cc72de244e873b7f29b6d4960, type: 3}
-  objetoIncorrectoPrefab: {fileID: 6007143426940250307, guid: 65ad2db22a44a2d44964491cbcb65821, type: 3}
-  tiempoMinimo: 1
-  tiempoMaximo: 2
+  objetosCorrectos:
+  - {fileID: 6007143426940250307, guid: 0188ca341ddc69947aae3dfd29ba106e, type: 3}
+  - {fileID: 6007143426940250307, guid: 333435a94b691204680b2fc43a19bf40, type: 3}
+  - {fileID: 6007143426940250307, guid: f9fb99b63c10a6d4bacaab0555dbc542, type: 3}
+  objetosIncorrectos:
+  - {fileID: 6007143426940250307, guid: 393bcca9b1f021b43ab46df414fde80d, type: 3}
+  - {fileID: 6007143426940250307, guid: 68c4b836e07a4f343be84d245d5176f8, type: 3}
+  - {fileID: 6007143426940250307, guid: 177b81ecc393e8742b238e1511f282cf, type: 3}
+  tiempoMinimo: 0.6
+  tiempoMaximo: 1.4
   limiteIzquierdo: -4
   limiteDerecho: 4
 --- !u!4 &1144787174
