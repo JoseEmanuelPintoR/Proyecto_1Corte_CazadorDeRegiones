@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SeleccionNiveles.unity
     guid: ef973164c9c922d41b5b57d78878b425
   - enabled: 1
+    path: Assets/Scenes/Creditos.unity
+    guid: eeee77359add7314aa00a1cfcc858e01
+  - enabled: 1
     path: Assets/Scenes/Nivel1_Andina.unity
     guid: 52fa0302279f73245a543012a6392b3b
   - enabled: 1

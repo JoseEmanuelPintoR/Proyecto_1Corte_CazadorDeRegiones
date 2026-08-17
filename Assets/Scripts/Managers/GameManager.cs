@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,6 +37,11 @@ public class GameManager : MonoBehaviour
     public int Vidas => vidas;
     public int PuntosObjetivo => puntosObjetivo;
     public float TiempoRestante => tiempoRestante;
+
+    [Header("Pausa")]
+    [SerializeField] private GameObject panelPausa;
+
+    private bool juegoPausado = false;
 
     void Awake()
     {
@@ -186,5 +192,46 @@ public class GameManager : MonoBehaviour
         powerUpActivo = false;
 
         Debug.Log("Power Up terminado");
+    }
+
+    public void VolverSeleccionNiveles()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("SeleccionNiveles");
+    }
+
+    public void ReintentarNivel()
+    {
+        Time.timeScale = 1f;
+
+        Scene escenaActual = SceneManager.GetActiveScene();
+
+        SceneManager.LoadScene(escenaActual.name);
+    }
+
+    public void PausarJuego()
+    {
+        if (juegoFinalizado || juegoPausado)
+            return;
+
+        juegoPausado = true;
+        panelPausa.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void ContinuarJuego()
+    {
+        if (!juegoPausado)
+            return;
+
+        juegoPausado = false;
+        panelPausa.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    public void VolverMenuPrincipal()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MenuPrincipal");
     }
 }

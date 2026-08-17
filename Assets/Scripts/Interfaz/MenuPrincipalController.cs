@@ -17,4 +17,10 @@ public class MenuPrincipalController : MonoBehaviour
     {
         SceneManager.LoadScene("Creditos");
     }
+
+    public void SalirJuego()
+    {
+        Debug.Log("Saliendo del juego...");
+        Application.Quit();
+    }
 }
