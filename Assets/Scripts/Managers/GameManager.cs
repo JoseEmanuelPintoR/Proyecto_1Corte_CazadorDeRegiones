@@ -118,11 +118,16 @@ public class GameManager : MonoBehaviour
     {
         juegoFinalizado = true;
 
-        Debug.Log("¡NIVEL COMPLETADO!");
+        Debug.Log("ï¿½NIVEL COMPLETADO!");
 
         if (panelVictoria != null)
         {
             panelVictoria.SetActive(true);
+        }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.ReproducirVictoria();
         }
 
         Time.timeScale = 0f;
@@ -131,11 +136,16 @@ public class GameManager : MonoBehaviour
     {
         juegoFinalizado = true;
 
-        Debug.Log("¡NIVEL PERDIDO!");
+        Debug.Log("ï¿½NIVEL PERDIDO!");
 
         if (panelDerrota != null)
         {
             panelDerrota.SetActive(true);
+        }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.ReproducirDerrota();
         }
 
         Time.timeScale = 0f;
@@ -146,7 +156,7 @@ public class GameManager : MonoBehaviour
         if (juegoFinalizado)
             return;
 
-        // Mientras el power-up esté activo no se puede volver a cargar
+        // Mientras el power-up estï¿½ activo no se puede volver a cargar
         if (powerUpActivo)
             return;
 
@@ -170,7 +180,7 @@ public class GameManager : MonoBehaviour
 
         if (cargaPowerUp < cargaMaxima)
         {
-            Debug.Log("Power Up todavía no está listo");
+            Debug.Log("Power Up todavï¿½a no estï¿½ listo");
             return;
         }
 
@@ -185,7 +195,7 @@ public class GameManager : MonoBehaviour
         powerUpActivo = true;
         cargaPowerUp = 0;
 
-        Debug.Log("¡POWER UP ACTIVADO!");
+        Debug.Log("ï¿½POWER UP ACTIVADO!");
 
         yield return new WaitForSeconds(duracionPowerUp);
 

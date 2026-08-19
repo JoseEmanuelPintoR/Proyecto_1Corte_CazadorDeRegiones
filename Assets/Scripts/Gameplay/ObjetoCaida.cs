@@ -37,7 +37,7 @@ public class ObjetoCaida : MonoBehaviour
 
             rb.AddForce(fuerzaContraria, ForceMode.Force);
 
-            // Evita que un objeto que ya venía rápido siga cayendo demasiado rápido
+            // Evita que un objeto que ya venï¿½a rï¿½pido siga cayendo demasiado rï¿½pido
             Vector3 velocidadActual = rb.linearVelocity;
 
             if (velocidadActual.y < -velocidadMaximaPowerUp)
@@ -63,6 +63,11 @@ public class ObjetoCaida : MonoBehaviour
 
         if (tipoObjeto == TipoObjeto.Correcto)
         {
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.ReproducirCorrecto();
+            }
+
             GameManager.Instance.SumarPuntos(200);
             GameManager.Instance.AgregarCargaPowerUp();
 
@@ -70,6 +75,11 @@ public class ObjetoCaida : MonoBehaviour
         }
         else
         {
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.ReproducirIncorrecto();
+            }
+
             GameManager.Instance.RestarPuntos(100);
             GameManager.Instance.PerderVida();
 
