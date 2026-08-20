@@ -26,6 +26,10 @@ public class PersonalizacionController : MonoBehaviour
     [SerializeField] private Color colorNormal = Color.white;
     [SerializeField] private Color colorSeleccionado = Color.yellow;
 
+    [Header("Vista previa del condor")]
+    [SerializeField] private Image vistaPrevia;
+    [SerializeField] private AccesorioCondor[] accesorios;
+
     public void VolverMenu()
     {
         SceneManager.LoadScene("MenuPrincipal");
@@ -132,6 +136,26 @@ public class PersonalizacionController : MonoBehaviour
         botonPlumas.image.color =
             accesorioSeleccionado == "Plumas"
             ? colorSeleccionado : colorNormal;
+
+        ActualizarVistaPrevia();
+    }
+
+    private void ActualizarVistaPrevia()
+    {
+        if (vistaPrevia == null || accesorios == null)
+        {
+            return;
+        }
+
+        foreach (AccesorioCondor accesorio in accesorios)
+        {
+            if (accesorio != null && accesorio.clave == accesorioSeleccionado)
+            {
+                vistaPrevia.sprite = accesorio.sprite;
+                vistaPrevia.enabled = accesorio.sprite != null;
+                return;
+            }
+        }
     }
 
 

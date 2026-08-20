@@ -18,9 +18,13 @@ public class PlayerController : MonoBehaviour
 
     private bool estaEnSuelo = true;
 
-    // Controles táctiles
+    // Controles tï¿½ctiles
     private bool botonIzquierdaPresionado = false;
     private bool botonDerechaPresionado = false;
+
+    public float MovimientoHorizontal => movimientoHorizontal;
+
+    public bool EstaEnSuelo => estaEnSuelo;
 
     void Awake()
     {
@@ -52,7 +56,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Teclado + botones táctiles
+        // Teclado + botones tï¿½ctiles
         bool moverIzquierda =
             izquierdaTeclado || botonIzquierdaPresionado;
 
