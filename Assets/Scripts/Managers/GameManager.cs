@@ -156,7 +156,6 @@ public class GameManager : MonoBehaviour
         if (juegoFinalizado)
             return;
 
-        // Mientras el power-up est� activo no se puede volver a cargar
         if (powerUpActivo)
             return;
 

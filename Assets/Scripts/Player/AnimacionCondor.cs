@@ -12,14 +12,16 @@ public class AnimacionCondor : MonoBehaviour
     [SerializeField] private bool arteMiraIzquierda = true;
 
     [Header("Accesorio elegido en Personalizacion")]
-    [Tooltip("Vista de frente sin accesorio; es la unica que se puede sustituir.")]
+    [Tooltip("Vistas base sin accesorio; son las que el Animator pone en cada clip.")]
     [SerializeField] private Sprite spriteFrente;
+    [SerializeField] private Sprite spriteLado;
+    [SerializeField] private Sprite spriteTresCuartos;
 
-    [SerializeField] private AccesorioCondor[] accesorios;
+    [SerializeField] private SkinCondor[] skins;
 
     private const string ClaveAccesorio = "AccesorioSeleccionado";
 
-    private Sprite spriteAccesorio;
+    private SkinCondor skinElegido;
 
     private static readonly int ParametroCaminando = Animator.StringToHash("Caminando");
     private static readonly int ParametroEnSuelo = Animator.StringToHash("EnSuelo");
@@ -34,25 +36,25 @@ public class AnimacionCondor : MonoBehaviour
     private void Awake()
     {
         Resolver();
-        BuscarAccesorio();
+        BuscarSkin();
     }
 
-    private void BuscarAccesorio()
+    private void BuscarSkin()
     {
-        spriteAccesorio = null;
+        skinElegido = null;
 
-        if (accesorios == null || accesorios.Length == 0)
+        if (skins == null || skins.Length == 0)
         {
             return;
         }
 
         string elegido = PlayerPrefs.GetString(ClaveAccesorio, "Predeterminado");
 
-        foreach (AccesorioCondor accesorio in accesorios)
+        foreach (SkinCondor skin in skins)
         {
-            if (accesorio != null && accesorio.clave == elegido)
+            if (skin != null && skin.clave == elegido)
             {
-                spriteAccesorio = accesorio.sprite;
+                skinElegido = skin;
                 return;
             }
         }
@@ -102,14 +104,41 @@ public class AnimacionCondor : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (spriteAccesorio == null || sprite == null || spriteFrente == null)
+        if (skinElegido == null || sprite == null)
         {
             return;
         }
 
-        if (sprite.sprite == spriteFrente || sprite.sprite == spriteAccesorio)
+        Sprite reemplazo = Equivalente(sprite.sprite);
+
+        if (reemplazo != null)
         {
-            sprite.sprite = spriteAccesorio;
+            sprite.sprite = reemplazo;
         }
+    }
+
+    private Sprite Equivalente(Sprite actual)
+    {
+        if (actual == null)
+        {
+            return null;
+        }
+
+        if (actual == spriteFrente || actual == skinElegido.frente)
+        {
+            return skinElegido.frente;
+        }
+
+        if (actual == spriteLado || actual == skinElegido.lado)
+        {
+            return skinElegido.lado;
+        }
+
+        if (actual == spriteTresCuartos || actual == skinElegido.tresCuartos)
+        {
+            return skinElegido.tresCuartos;
+        }
+
+        return null;
     }
 }

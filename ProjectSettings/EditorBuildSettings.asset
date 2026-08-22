@@ -32,6 +32,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Nivel5_Amazonia.unity
     guid: 31d405d6983671240827fd8373fae38c
+  - enabled: 1
+    path: Assets/Scenes/Instrucciones.unity
+    guid: c0a5a1f0c295d414b8a090b7856134b7
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

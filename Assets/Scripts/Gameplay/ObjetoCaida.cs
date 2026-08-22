@@ -16,7 +16,7 @@ public class ObjetoCaida : MonoBehaviour
     [Header("Power Up")]
     [SerializeField] private float velocidadMaximaPowerUp = 2f;
     [SerializeField] private float factorGravedadPowerUp = 0.25f;
-    
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -29,7 +29,7 @@ public class ObjetoCaida : MonoBehaviour
 
         if (GameManager.Instance.PowerUpActivo)
         {
-            // Reduce la gravedad efectiva al 25 %
+
             Vector3 fuerzaContraria =
                 -Physics.gravity *
                 rb.mass *
@@ -37,7 +37,6 @@ public class ObjetoCaida : MonoBehaviour
 
             rb.AddForce(fuerzaContraria, ForceMode.Force);
 
-            // Evita que un objeto que ya ven�a r�pido siga cayendo demasiado r�pido
             Vector3 velocidadActual = rb.linearVelocity;
 
             if (velocidadActual.y < -velocidadMaximaPowerUp)

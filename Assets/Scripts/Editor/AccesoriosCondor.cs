@@ -18,17 +18,64 @@ public static class AccesoriosCondor
     private class Opcion
     {
         public string clave;
-        public string ruta;
+
+        public string vistaPrevia;
+
+        public string frente;
+        public string lado;
+        public string tresCuartos;
     }
 
     private static readonly Opcion[] Opciones =
     {
-        new Opcion { clave = "Predeterminado",   ruta = CarpetaVistas + "/CondorFrente.png" },
-        new Opcion { clave = "Poncho",           ruta = CarpetaAccesorios + "/CondorAndina.png" },
-        new Opcion { clave = "SombreroVueltiao", ruta = CarpetaAccesorios + "/CondorCaribe.png" },
-        new Opcion { clave = "VestidoDanza",     ruta = CarpetaAccesorios + "/CondorPacifico.png" },
-        new Opcion { clave = "SombreroLlanero",  ruta = CarpetaAccesorios + "/CondorOrinoquia.png" },
-        new Opcion { clave = "Plumas",           ruta = CarpetaAccesorios + "/CondorAmazonica.png" },
+        new Opcion
+        {
+            clave = "Predeterminado",
+            vistaPrevia = CarpetaVistas + "/CondorFrente.png",
+            frente = CarpetaVistas + "/CondorFrente.png",
+            lado = CarpetaVistas + "/CondorLado.png",
+            tresCuartos = CarpetaVistas + "/Condor3-4.png"
+        },
+        new Opcion
+        {
+            clave = "Poncho",
+            vistaPrevia = CarpetaAccesorios + "/CondorAndina.png",
+            frente = CarpetaVistas + "/CondorFrenteAndina.png",
+            lado = CarpetaVistas + "/CondorLadoAndina.png",
+            tresCuartos = CarpetaVistas + "/Condor3-4Andina.png"
+        },
+        new Opcion
+        {
+            clave = "SombreroVueltiao",
+            vistaPrevia = CarpetaAccesorios + "/CondorCaribe.png",
+            frente = CarpetaVistas + "/CondorFrenteCaribe.png",
+            lado = CarpetaVistas + "/CondorLadoCaribe.png",
+            tresCuartos = CarpetaVistas + "/Condor3-4Caribe.png"
+        },
+        new Opcion
+        {
+            clave = "VestidoDanza",
+            vistaPrevia = CarpetaAccesorios + "/CondorPacifico.png",
+            frente = CarpetaVistas + "/CondorFrentePacifico.png",
+            lado = CarpetaVistas + "/CondorLadoPacifico.png",
+            tresCuartos = CarpetaVistas + "/Condor3-4Pacifico.png"
+        },
+        new Opcion
+        {
+            clave = "SombreroLlanero",
+            vistaPrevia = CarpetaAccesorios + "/CondorOrinoquia.png",
+            frente = CarpetaVistas + "/CondorFrenteOrinoquia.png",
+            lado = CarpetaVistas + "/CondorLadoOrinoquia.png",
+            tresCuartos = CarpetaVistas + "/Condor3-4Orinoquia.png"
+        },
+        new Opcion
+        {
+            clave = "Plumas",
+            vistaPrevia = CarpetaAccesorios + "/CondorAmazonica.png",
+            frente = CarpetaVistas + "/CondorFrenteAmazonica.png",
+            lado = CarpetaVistas + "/CondorLadoAmazonia.png",
+            tresCuartos = CarpetaVistas + "/Condor3-4Amazonia.png"
+        },
     };
 
     [MenuItem("Herramientas/Cazador de Regiones/6 · Accesorios del condor", false, 105)]
@@ -54,76 +101,113 @@ public static class AccesoriosCondor
         Debug.Log(log.ToString());
     }
 
-    private static bool ImportarAccesorios(StringBuilder log)
+    private class Referencia
     {
-        TextureImporter referencia = AssetImporter.GetAtPath(AnimacionesCondor.RutaFrente) as TextureImporter;
+        public Vector2 pivote;
+        public float ppu;
+        public Vector2 tamano;
+    }
 
-        if (referencia == null)
+    private static bool LeerReferencia(string ruta, StringBuilder log, out Referencia referencia)
+    {
+        referencia = null;
+
+        TextureImporter importador = AssetImporter.GetAtPath(ruta) as TextureImporter;
+
+        if (importador == null)
         {
-            log.AppendLine($"[error] No esta {AnimacionesCondor.RutaFrente}");
+            log.AppendLine($"[error] No esta {ruta}");
             return false;
         }
 
-        TextureImporterSettings ajustesReferencia = new TextureImporterSettings();
-        referencia.ReadTextureSettings(ajustesReferencia);
+        TextureImporterSettings ajustes = new TextureImporterSettings();
+        importador.ReadTextureSettings(ajustes);
 
-        if (ajustesReferencia.spriteAlignment != (int)SpriteAlignment.Custom)
+        if (ajustes.spriteAlignment != (int)SpriteAlignment.Custom)
         {
-            log.AppendLine("[error] CondorFrente todavia no tiene el pivote calculado.");
+            log.AppendLine($"[error] {Path.GetFileNameWithoutExtension(ruta)} todavia no tiene el pivote calculado.");
             log.AppendLine("        Corre antes el paso 4 (Poner el condor animado).");
             return false;
         }
 
-        Vector2 pivote = ajustesReferencia.spritePivot;
-        float ppu = referencia.spritePixelsPerUnit;
+        Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(ruta);
 
-        Sprite spriteReferencia = AssetDatabase.LoadAssetAtPath<Sprite>(AnimacionesCondor.RutaFrente);
-        Vector2 tamanoReferencia = spriteReferencia != null ? spriteReferencia.rect.size : Vector2.zero;
+        referencia = new Referencia
+        {
+            pivote = ajustes.spritePivot,
+            ppu = importador.spritePixelsPerUnit,
+            tamano = sprite != null ? sprite.rect.size : Vector2.zero
+        };
+
+        return true;
+    }
+
+    private static bool ImportarAccesorios(StringBuilder log)
+    {
+        log.AppendLine("--- Vistas de cada accesorio ---");
+
+        if (!LeerReferencia(AnimacionesCondor.RutaFrente, log, out Referencia frente) ||
+            !LeerReferencia(AnimacionesCondor.RutaLado, log, out Referencia lado) ||
+            !LeerReferencia(AnimacionesCondor.RutaTresCuartos, log, out Referencia tresCuartos))
+        {
+            return false;
+        }
 
         foreach (Opcion opcion in Opciones)
         {
-            if (opcion.ruta == AnimacionesCondor.RutaFrente)
+            int importadas = 0;
+
+            importadas += Importar(opcion.frente, frente, log) ? 1 : 0;
+            importadas += Importar(opcion.lado, lado, log) ? 1 : 0;
+            importadas += Importar(opcion.tresCuartos, tresCuartos, log) ? 1 : 0;
+
+            if (opcion.vistaPrevia != opcion.frente)
             {
-                continue;
+                Importar(opcion.vistaPrevia, frente, log);
             }
 
-            TextureImporter importador = AssetImporter.GetAtPath(opcion.ruta) as TextureImporter;
-
-            if (importador == null)
-            {
-                log.AppendLine($"[aviso] No esta {opcion.ruta}");
-                continue;
-            }
-
-            importador.textureType = TextureImporterType.Sprite;
-            importador.spriteImportMode = SpriteImportMode.Single;
-            importador.alphaIsTransparency = true;
-            importador.mipmapEnabled = false;
-            importador.wrapMode = TextureWrapMode.Clamp;
-            importador.maxTextureSize = 1024;
-            importador.textureCompression = TextureImporterCompression.Uncompressed;
-
-            TextureImporterSettings ajustes = new TextureImporterSettings();
-            importador.ReadTextureSettings(ajustes);
-            ajustes.spriteAlignment = (int)SpriteAlignment.Custom;
-            ajustes.spritePivot = pivote;
-            importador.SetTextureSettings(ajustes);
-
-            importador.spritePixelsPerUnit = ppu;
-            importador.SaveAndReimport();
-
-            Sprite importado = AssetDatabase.LoadAssetAtPath<Sprite>(opcion.ruta);
-
-            if (importado != null && tamanoReferencia != Vector2.zero && importado.rect.size != tamanoReferencia)
-            {
-                log.AppendLine($"[aviso] {Path.GetFileName(opcion.ruta)} mide {importado.rect.size}, " +
-                               $"distinto de CondorFrente ({tamanoReferencia}): puede quedar descuadrado");
-            }
-
-            log.AppendLine($"  {opcion.clave}: {Path.GetFileNameWithoutExtension(opcion.ruta)}");
+            log.AppendLine($"  {opcion.clave}: {importadas}/3 vistas");
         }
 
         AssetDatabase.Refresh();
+        return true;
+    }
+
+    private static bool Importar(string ruta, Referencia referencia, StringBuilder log)
+    {
+        TextureImporter importador = AssetImporter.GetAtPath(ruta) as TextureImporter;
+
+        if (importador == null)
+        {
+            log.AppendLine($"[aviso] No esta {ruta}");
+            return false;
+        }
+
+        importador.textureType = TextureImporterType.Sprite;
+        importador.spriteImportMode = SpriteImportMode.Single;
+        importador.alphaIsTransparency = true;
+        importador.mipmapEnabled = false;
+        importador.wrapMode = TextureWrapMode.Clamp;
+        importador.maxTextureSize = 1024;
+        importador.textureCompression = TextureImporterCompression.Uncompressed;
+
+        TextureImporterSettings ajustes = new TextureImporterSettings();
+        importador.ReadTextureSettings(ajustes);
+        ajustes.spriteAlignment = (int)SpriteAlignment.Custom;
+        ajustes.spritePivot = referencia.pivote;
+        importador.SetTextureSettings(ajustes);
+
+        importador.spritePixelsPerUnit = referencia.ppu;
+        importador.SaveAndReimport();
+
+        Sprite importado = AssetDatabase.LoadAssetAtPath<Sprite>(ruta);
+
+        if (importado != null && referencia.tamano != Vector2.zero && importado.rect.size != referencia.tamano)
+        {
+            log.AppendLine($"[aviso] {Path.GetFileName(ruta)} mide {importado.rect.size}, " +
+                           $"distinto de su vista base ({referencia.tamano}): puede quedar descuadrado");
+        }
+
         return true;
     }
 
@@ -166,13 +250,13 @@ public static class AccesoriosCondor
             imagen = vista.gameObject.AddComponent<Image>();
         }
 
-        imagen.sprite = CargarSprite(Opciones[0]);
+        imagen.sprite = Cargar(Opciones[0].vistaPrevia);
         imagen.preserveAspect = true;
         imagen.raycastTarget = false;
 
         SerializedObject serializado = new SerializedObject(controlador);
         serializado.FindProperty("vistaPrevia").objectReferenceValue = imagen;
-        LlenarAccesorios(serializado.FindProperty("accesorios"));
+        LlenarVistasPrevias(serializado.FindProperty("accesorios"));
         serializado.ApplyModifiedProperties();
 
         log.AppendLine($"  Personalizacion: vista previa encima del nombre + {Opciones.Length} accesorios");
@@ -216,18 +300,20 @@ public static class AccesoriosCondor
             }
 
             SerializedObject serializado = new SerializedObject(animacion);
-            serializado.FindProperty("spriteFrente").objectReferenceValue = CargarSprite(Opciones[0]);
-            LlenarAccesorios(serializado.FindProperty("accesorios"));
+            serializado.FindProperty("spriteFrente").objectReferenceValue = Cargar(AnimacionesCondor.RutaFrente);
+            serializado.FindProperty("spriteLado").objectReferenceValue = Cargar(AnimacionesCondor.RutaLado);
+            serializado.FindProperty("spriteTresCuartos").objectReferenceValue = Cargar(AnimacionesCondor.RutaTresCuartos);
+            LlenarSkins(serializado.FindProperty("skins"));
             serializado.ApplyModifiedProperties();
 
-            log.AppendLine($"  {escena.name}: condor conectado a PlayerPrefs");
+            log.AppendLine($"  {escena.name}: condor con las 3 vistas por accesorio");
 
             EditorSceneManager.MarkSceneDirty(escena);
             EditorSceneManager.SaveScene(escena);
         }
     }
 
-    private static void LlenarAccesorios(SerializedProperty lista)
+    private static void LlenarVistasPrevias(SerializedProperty lista)
     {
         lista.arraySize = Opciones.Length;
 
@@ -235,13 +321,40 @@ public static class AccesoriosCondor
         {
             SerializedProperty elemento = lista.GetArrayElementAtIndex(i);
             elemento.FindPropertyRelative("clave").stringValue = Opciones[i].clave;
-            elemento.FindPropertyRelative("sprite").objectReferenceValue = CargarSprite(Opciones[i]);
+            elemento.FindPropertyRelative("sprite").objectReferenceValue = Cargar(Opciones[i].vistaPrevia);
         }
     }
 
-    private static Sprite CargarSprite(Opcion opcion)
+    private static void LlenarSkins(SerializedProperty lista)
     {
-        return AssetDatabase.LoadAssetAtPath<Sprite>(opcion.ruta);
+        lista.arraySize = Opciones.Length;
+
+        for (int i = 0; i < Opciones.Length; i++)
+        {
+            SerializedProperty elemento = lista.GetArrayElementAtIndex(i);
+            elemento.FindPropertyRelative("clave").stringValue = Opciones[i].clave;
+            elemento.FindPropertyRelative("frente").objectReferenceValue = Cargar(Opciones[i].frente);
+            elemento.FindPropertyRelative("lado").objectReferenceValue = Cargar(Opciones[i].lado);
+            elemento.FindPropertyRelative("tresCuartos").objectReferenceValue = Cargar(Opciones[i].tresCuartos);
+        }
+    }
+
+    public static string VistaPreviaDe(string clave)
+    {
+        foreach (Opcion opcion in Opciones)
+        {
+            if (opcion.clave == clave)
+            {
+                return opcion.vistaPrevia;
+            }
+        }
+
+        return null;
+    }
+
+    private static Sprite Cargar(string ruta)
+    {
+        return AssetDatabase.LoadAssetAtPath<Sprite>(ruta);
     }
 
     private static RectTransform BuscarRect(Scene escena, string nombre)

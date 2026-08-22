@@ -13,6 +13,13 @@ public class SpawnerObjetos : MonoBehaviour
     [SerializeField] private float tiempoMaximo = 2f;
 
     [Header("Limites horizontales")]
+    [Tooltip("Calcula los limites con lo que la camara ve de verdad, para que ningun objeto " +
+             "caiga fuera de la pantalla. Al desmarcarlo se usan los valores fijos de abajo.")]
+    [SerializeField] private bool limitesDesdeCamara = true;
+
+    [Tooltip("Radio del objeto que cae, para que no quede medio afuera al borde.")]
+    [SerializeField] private float radioObjeto = 0.5f;
+
     [SerializeField] private float limiteIzquierdo = -4f;
     [SerializeField] private float limiteDerecho = 4f;
 
@@ -21,13 +28,50 @@ public class SpawnerObjetos : MonoBehaviour
 
     private float tiempoSiguiente;
 
+    private Camera camara;
+    private Vector2Int ultimaPantalla;
+
+    private const float PlanoJuego = 0f;
+
     void Start()
     {
+        camara = Camera.main;
+        CalcularLimites();
         CalcularSiguienteAparicion();
+    }
+
+    private void CalcularLimites()
+    {
+        ultimaPantalla = new Vector2Int(Screen.width, Screen.height);
+
+        if (!limitesDesdeCamara)
+        {
+            return;
+        }
+
+        if (camara == null)
+        {
+            camara = Camera.main;
+        }
+
+        float mitadAncho = LimitesCamara.MitadAncho(camara, PlanoJuego);
+
+        if (mitadAncho <= 0f)
+        {
+            return;
+        }
+
+        limiteDerecho = Mathf.Max(0f, mitadAncho - radioObjeto);
+        limiteIzquierdo = -limiteDerecho;
     }
 
     void Update()
     {
+        if (Screen.width != ultimaPantalla.x || Screen.height != ultimaPantalla.y)
+        {
+            CalcularLimites();
+        }
+
         tiempoSiguiente -= Time.deltaTime;
 
         if (tiempoSiguiente <= 0f)
@@ -83,12 +127,11 @@ public class SpawnerObjetos : MonoBehaviour
         {
             float probabilidad = Random.value;
 
-            // 10% de probabilidad de 3 objetos
             if (probabilidad < 0.10f)
             {
                 cantidad = 3;
             }
-            // 30% de probabilidad de 2 objetos
+
             else if (probabilidad < 0.40f)
             {
                 cantidad = 2;

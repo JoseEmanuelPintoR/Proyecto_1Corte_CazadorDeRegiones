@@ -23,6 +23,8 @@ public static class AnimacionesCondor
     private const int OrdenCondor = 10;
 
     public static string RutaFrente => $"{CarpetaVistas}/{VistaFrente}.png";
+    public static string RutaLado => $"{CarpetaVistas}/{VistaLado}.png";
+    public static string RutaTresCuartos => $"{CarpetaVistas}/{VistaTresCuartos}.png";
 
     public static void ImportarVistas(StringBuilder log)
     {

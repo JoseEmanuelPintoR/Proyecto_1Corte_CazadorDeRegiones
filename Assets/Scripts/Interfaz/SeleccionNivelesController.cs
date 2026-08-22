@@ -3,29 +3,38 @@ using UnityEngine.SceneManagement;
 
 public class SeleccionNivelesController : MonoBehaviour
 {
+
     public void AbrirAndina()
     {
-        SceneManager.LoadScene("Nivel1_Andina");
+        AbrirInstrucciones(0);
     }
 
     public void AbrirCaribe()
     {
-        SceneManager.LoadScene("Nivel2_Caribe");
+        AbrirInstrucciones(1);
     }
 
     public void AbrirPacifica()
     {
-        SceneManager.LoadScene("Nivel3_Pacifica");
+        AbrirInstrucciones(2);
     }
 
     public void AbrirOrinoquia()
     {
-        SceneManager.LoadScene("Nivel4_Orinoquia");
+        AbrirInstrucciones(3);
     }
 
     public void AbrirAmazonia()
     {
-        SceneManager.LoadScene("Nivel5_Amazonia");
+        AbrirInstrucciones(4);
+    }
+
+    private void AbrirInstrucciones(int region)
+    {
+        PlayerPrefs.SetInt(InstruccionesController.ClaveRegion, region);
+        PlayerPrefs.Save();
+
+        SceneManager.LoadScene("Instrucciones");
     }
 
     public void VolverMenu()

@@ -6,7 +6,8 @@ public class BotonMovimiento : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public enum Direccion
     {
         Izquierda,
-        Derecha
+        Derecha,
+        Salto
     }
 
     [SerializeField] private Direccion direccion;
@@ -14,25 +15,34 @@ public class BotonMovimiento : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (direccion == Direccion.Izquierda)
-        {
-            jugador.MoverIzquierda(true);
-        }
-        else
-        {
-            jugador.MoverDerecha(true);
-        }
+        Avisar(true);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (direccion == Direccion.Izquierda)
+        Avisar(false);
+    }
+
+    private void Avisar(bool presionado)
+    {
+        if (jugador == null)
         {
-            jugador.MoverIzquierda(false);
+            return;
         }
-        else
+
+        switch (direccion)
         {
-            jugador.MoverDerecha(false);
+            case Direccion.Izquierda:
+                jugador.MoverIzquierda(presionado);
+                break;
+
+            case Direccion.Derecha:
+                jugador.MoverDerecha(presionado);
+                break;
+
+            case Direccion.Salto:
+                jugador.MantenerSalto(presionado);
+                break;
         }
     }
 }

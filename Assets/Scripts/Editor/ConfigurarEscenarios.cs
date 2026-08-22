@@ -42,17 +42,37 @@ public static class ConfigurarEscenarios
         { "Maloca",           "ElementoAmazonica3" },
     };
 
-    private class Nivel
+    private static readonly Dictionary<string, string> NombrePorElemento = new Dictionary<string, string>
+    {
+        { "Cafe",             "Cafe"                 },
+        { "SombreroAguadeno", "Sombrero aguadeno"    },
+        { "Tiple",            "Tiple"                },
+        { "SombreroVueltiao", "Sombrero vueltiao"    },
+        { "TamborAlegre",     "Tambor alegre"        },
+        { "FlorCayena",       "Flor de cayena"       },
+        { "MarimbaChonta",    "Marimba de chonta"    },
+        { "BallenaJorobada",  "Ballena jorobada"     },
+        { "Chontaduro",       "Chontaduro"           },
+        { "SombreroLlanero",  "Sombrero llanero"     },
+        { "CaballoCriollo",   "Caballo criollo"      },
+        { "ArpaLlanera",      "Arpa llanera"         },
+        { "Anaconda",         "Anaconda verde"       },
+        { "RanaVenenosa",     "Rana dardo venenosa"  },
+        { "Maloca",           "Maloca"               },
+    };
+
+    internal class Nivel
     {
         public string escena;
         public string carpetaPrefabs;
         public string sufijo;
         public string fondo;
         public float lineaSuelo;
+
         public string[] elementos;
     }
 
-    private static readonly Nivel[] Niveles =
+    internal static readonly Nivel[] Niveles =
     {
         new Nivel
         {
@@ -75,7 +95,7 @@ public static class ConfigurarEscenarios
         new Nivel
         {
             escena = "Nivel4_Orinoquia", carpetaPrefabs = "Nivel4_Orinoquia", sufijo = "Orinoquia",
-            fondo = null, lineaSuelo = 0.16f,
+            fondo = "RegionOrinoquia", lineaSuelo = 0.16f,
             elementos = new[] { "ArpaLlanera", "SombreroLlanero", "CaballoCriollo", "Tiple", "Chontaduro", "RanaVenenosa" }
         },
         new Nivel
@@ -160,7 +180,14 @@ public static class ConfigurarEscenarios
         log.AppendLine($"Texturas reimportadas: {cambiados} · ya estaban bien: {yaCorrectos}");
     }
 
-    private static int ReimportarCarpeta(string carpeta, int tamanoMaximo, StringBuilder log, ref int yaCorrectos)
+    public static int ReimportarCarpeta(string carpeta, int tamanoMaximo, StringBuilder log, Vector4 borde = default)
+    {
+        int yaCorrectos = 0;
+        return ReimportarCarpeta(carpeta, tamanoMaximo, log, ref yaCorrectos, borde);
+    }
+
+    private static int ReimportarCarpeta(string carpeta, int tamanoMaximo, StringBuilder log, ref int yaCorrectos,
+        Vector4 borde = default)
     {
         if (!AssetDatabase.IsValidFolder(carpeta))
         {
@@ -188,7 +215,8 @@ public static class ConfigurarEscenarios
                 !importador.mipmapEnabled &&
                 importador.wrapMode == TextureWrapMode.Clamp &&
                 Mathf.Approximately(importador.spritePixelsPerUnit, 100f) &&
-                importador.maxTextureSize == tamanoMaximo;
+                importador.maxTextureSize == tamanoMaximo &&
+                importador.spriteBorder == borde;
 
             if (correcto)
             {
@@ -203,6 +231,7 @@ public static class ConfigurarEscenarios
             importador.wrapMode = TextureWrapMode.Clamp;
             importador.spritePixelsPerUnit = 100f;
             importador.maxTextureSize = tamanoMaximo;
+            importador.spriteBorder = borde;
             importador.SaveAndReimport();
 
             cambiados++;
@@ -210,6 +239,21 @@ public static class ConfigurarEscenarios
         }
 
         return cambiados;
+    }
+
+    public static Sprite SpriteDeElemento(string elemento)
+    {
+        if (!SpritePorElemento.TryGetValue(elemento, out string nombreSprite))
+        {
+            return null;
+        }
+
+        return CargarSprite($"{CarpetaElementos}/{nombreSprite}.png");
+    }
+
+    public static string NombreDeElemento(string elemento)
+    {
+        return NombrePorElemento.TryGetValue(elemento, out string nombre) ? nombre : elemento;
     }
 
     private static void ColocarFondos(StringBuilder log)

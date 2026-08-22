@@ -7,20 +7,39 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float velocidad = 5f;
 
     [Header("Salto")]
-    [SerializeField] private float fuerzaSalto = 7f;
+    [SerializeField] private float fuerzaSalto = 11f;
+
+    [Tooltip("Gravedad extra mientras cae. 1 = gravedad normal; mas alto = cae mas rapido.")]
+    [SerializeField] private float multiplicadorCaida = 2.5f;
+
+    [Tooltip("Gravedad extra mientras sube pero ya se solto el boton, para dosificar la altura.")]
+    [SerializeField] private float multiplicadorSaltoCorto = 2f;
 
     [Header("Limites")]
+    [Tooltip("Calcula los limites con lo que la camara ve de verdad. Al desmarcarlo se usan " +
+             "los valores fijos de abajo.")]
+    [SerializeField] private bool limitesDesdeCamara = true;
+
+    [Tooltip("Aire que se deja entre el ala del condor y el borde de la pantalla.")]
+    [SerializeField] private float margenBorde = 0.15f;
+
     [SerializeField] private float limiteIzquierdo = -4f;
     [SerializeField] private float limiteDerecho = 4f;
 
     private Rigidbody rb;
     private float movimientoHorizontal;
 
+    private Camera camara;
+    private float mediaFigura;
+    private Vector2Int ultimaPantalla;
+
     private bool estaEnSuelo = true;
 
-    // Controles t�ctiles
     private bool botonIzquierdaPresionado = false;
     private bool botonDerechaPresionado = false;
+    private bool botonSaltoPresionado = false;
+
+    private bool saltoMantenido = false;
 
     public float MovimientoHorizontal => movimientoHorizontal;
 
@@ -29,18 +48,56 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        camara = Camera.main;
+
+        SpriteRenderer dibujo = GetComponentInChildren<SpriteRenderer>();
+        mediaFigura = dibujo != null ? dibujo.bounds.extents.x : 0.5f;
+
+        CalcularLimites();
+    }
+
+    private void CalcularLimites()
+    {
+        ultimaPantalla = new Vector2Int(Screen.width, Screen.height);
+
+        if (!limitesDesdeCamara)
+        {
+            return;
+        }
+
+        if (camara == null)
+        {
+            camara = Camera.main;
+        }
+
+        float mitadAncho = LimitesCamara.MitadAncho(camara, transform.position.z);
+
+        if (mitadAncho <= 0f)
+        {
+            return;
+        }
+
+        limiteDerecho = Mathf.Max(0f, mitadAncho - mediaFigura - margenBorde);
+        limiteIzquierdo = -limiteDerecho;
     }
 
     void Update()
     {
+        if (Screen.width != ultimaPantalla.x || Screen.height != ultimaPantalla.y)
+        {
+            CalcularLimites();
+        }
+
         movimientoHorizontal = 0f;
 
         bool izquierdaTeclado = false;
         bool derechaTeclado = false;
+        bool saltoTeclado = false;
 
-        // Controles de teclado para pruebas en PC
         if (Keyboard.current != null)
         {
+            saltoTeclado = Keyboard.current.spaceKey.isPressed;
+
             izquierdaTeclado =
                 Keyboard.current.aKey.isPressed ||
                 Keyboard.current.leftArrowKey.isPressed;
@@ -56,12 +113,13 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Teclado + botones t�ctiles
         bool moverIzquierda =
             izquierdaTeclado || botonIzquierdaPresionado;
 
         bool moverDerecha =
             derechaTeclado || botonDerechaPresionado;
+
+        saltoMantenido = saltoTeclado || botonSaltoPresionado;
 
         if (moverIzquierda && !moverDerecha)
         {
@@ -79,6 +137,8 @@ public class PlayerController : MonoBehaviour
 
         velocidadActual.x = movimientoHorizontal * velocidad;
 
+        velocidadActual.y += GravedadExtra(velocidadActual.y);
+
         rb.linearVelocity = velocidadActual;
 
         Vector3 posicionActual = transform.position;
@@ -92,6 +152,26 @@ public class PlayerController : MonoBehaviour
         transform.position = posicionActual;
     }
 
+    private float GravedadExtra(float velocidadVertical)
+    {
+        float multiplicador;
+
+        if (velocidadVertical < 0f)
+        {
+            multiplicador = multiplicadorCaida;
+        }
+        else if (velocidadVertical > 0f && !saltoMantenido)
+        {
+            multiplicador = multiplicadorSaltoCorto;
+        }
+        else
+        {
+            return 0f;
+        }
+
+        return Physics.gravity.y * (multiplicador - 1f) * Time.fixedDeltaTime;
+    }
+
     public void MoverIzquierda(bool presionado)
     {
         botonIzquierdaPresionado = presionado;
@@ -100,6 +180,16 @@ public class PlayerController : MonoBehaviour
     public void MoverDerecha(bool presionado)
     {
         botonDerechaPresionado = presionado;
+    }
+
+    public void MantenerSalto(bool presionado)
+    {
+        botonSaltoPresionado = presionado;
+
+        if (presionado)
+        {
+            Saltar();
+        }
     }
 
     public void Saltar()

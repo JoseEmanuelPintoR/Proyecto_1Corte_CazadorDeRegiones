@@ -24,7 +24,6 @@ public class AudioManager : MonoBehaviour
 
     private Coroutine corteClick;
 
-    // Musica de fondo
     private AudioClip musicaMenu;
     private AudioClip musicaAndina;
     private AudioClip musicaCaribe;
@@ -32,7 +31,6 @@ public class AudioManager : MonoBehaviour
     private AudioClip musicaOrinoquia;
     private AudioClip musicaAmazonia;
 
-    // Efectos
     private AudioClip sonidoCorrecto;
     private AudioClip sonidoIncorrecto;
     private AudioClip sonidoVictoria;
@@ -81,8 +79,8 @@ public class AudioManager : MonoBehaviour
     {
         fuenteMusica = gameObject.AddComponent<AudioSource>();
         fuenteMusica.playOnAwake = false;
-        fuenteMusica.loop = true;          // bucle infinito
-        fuenteMusica.spatialBlend = 0f;    // 2D: no depende de la posicion de la camara
+        fuenteMusica.loop = true;
+        fuenteMusica.spatialBlend = 0f;
         fuenteMusica.volume = volumenMusica;
 
         fuenteEfectos = gameObject.AddComponent<AudioSource>();
@@ -157,13 +155,36 @@ public class AudioManager : MonoBehaviour
             case "Nivel5_Amazonia":
                 clip = musicaAmazonia;
                 break;
+            case "Instrucciones":
+
+                clip = MusicaDeRegion(
+                    PlayerPrefs.GetInt(InstruccionesController.ClaveRegion, 0));
+                break;
             default:
-                // MenuPrincipal, SeleccionNiveles, Personalizacion y Creditos
+
                 clip = musicaMenu;
                 break;
         }
 
         ReproducirMusica(clip);
+    }
+
+    private AudioClip MusicaDeRegion(int indice)
+    {
+        switch (indice)
+        {
+            case 0: return musicaAndina;
+            case 1: return musicaCaribe;
+            case 2: return musicaPacifica;
+            case 3: return musicaOrinoquia;
+            case 4: return musicaAmazonia;
+            default: return musicaMenu;
+        }
+    }
+
+    public void ReproducirMusicaDeRegion(int indice)
+    {
+        ReproducirMusica(MusicaDeRegion(indice));
     }
 
     private void ReproducirMusica(AudioClip clip)
@@ -216,7 +237,7 @@ public class AudioManager : MonoBehaviour
 
         fuenteClick.clip = sonidoClick;
         fuenteClick.volume = volumenClick;
-        // Salta el silencio inicial y cae justo en el primer click del pack.
+
         fuenteClick.time = Mathf.Clamp(inicioClick, 0f, sonidoClick.length - 0.01f);
         fuenteClick.Play();
 

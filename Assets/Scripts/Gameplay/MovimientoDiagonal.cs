@@ -17,7 +17,6 @@ public class MovimientoDiagonal : MonoBehaviour
         if (rb == null)
             return;
 
-        // Elegir aleatoriamente izquierda o derecha
         float direccion = Random.Range(0, 2) == 0 ? -1f : 1f;
 
         rb.AddForce(

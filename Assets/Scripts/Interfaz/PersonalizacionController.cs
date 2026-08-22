@@ -37,7 +37,7 @@ public class PersonalizacionController : MonoBehaviour
 
     void Start()
     {
-        // Si ya existe un nombre guardado, lo mostramos
+
         if (PlayerPrefs.HasKey(CLAVE_NOMBRE))
         {
             campoNombre.text = PlayerPrefs.GetString(CLAVE_NOMBRE);
@@ -157,6 +157,5 @@ public class PersonalizacionController : MonoBehaviour
             }
         }
     }
-
 
 }
