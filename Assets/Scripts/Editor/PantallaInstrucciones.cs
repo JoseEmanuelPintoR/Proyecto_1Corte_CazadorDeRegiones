@@ -20,6 +20,12 @@ public static class PantallaInstrucciones
 
     private const float AnchoInterior = 770f;
 
+    private const float AltoBotonPie = 118f;
+
+    private const string TextoPoder =
+        "Recoge 3 elementos correctos para activar el poder.\n" +
+        "Con el poder los objetos caen mas lento.";
+
     private class Arte
     {
         public string carpeta;
@@ -106,7 +112,7 @@ public static class PantallaInstrucciones
         RectTransform marco = BotonesInterfaz.FondoYMarco(escena, lienzo, $"{CarpetaMenu}/Marco.png");
         Image fondo = lienzo.Find("Fondo").GetComponent<Image>();
 
-        RectTransform columna = UtilesInterfaz.Columna(escena, marco, "Columna", 22f, 210, 90, 74);
+        RectTransform columna = UtilesInterfaz.Columna(escena, marco, "Columna", 16f, 170, 70, 74);
 
         Sprite flecha = UtilesInterfaz.CargarSprite(RutaArte(0, "FlechaRegresar"));
 
@@ -167,17 +173,19 @@ public static class PantallaInstrucciones
             Fila(escena, listas, $"Evita{i + 1}", 0.75f, y, out iconosEvita[i], out textosEvita[i]);
         }
 
-        UtilesInterfaz.Espaciador(escena, columna, "Aire", 2, 1f);
+        Poder(escena, columna);
+
+        UtilesInterfaz.Espaciador(escena, columna, "Aire", 3, 0.3f);
 
         RectTransform fila = UtilesInterfaz.Adoptar(escena, columna, "Botones");
-        UtilesInterfaz.EnColumna(fila, columna, 3, 150f, AnchoInterior, 0f, 125f);
+        UtilesInterfaz.EnColumna(fila, columna, 4, 130f, AnchoInterior, 0f, AltoBotonPie);
 
         Button menu = Boton(escena, fila, "BotonMenu", UtilesInterfaz.CargarSprite(RutaArte(0, "BotonMenu")),
-            new Vector2(0.26f, 0.5f), Vector2.zero, 145f, "Menu", 52f, out Image imagenMenu);
+            new Vector2(0.24f, 0.5f), Vector2.zero, AltoBotonPie, "Menu", 46f, out Image imagenMenu);
         UtilesInterfaz.Reconectar(menu, controlador, "VolverMenu");
 
         Button empezar = Boton(escena, fila, "BotonEmpezar", UtilesInterfaz.CargarSprite(RutaArte(0, "BotonEmpezar")),
-            new Vector2(0.74f, 0.5f), Vector2.zero, 145f, "Empezar", 52f, out Image imagenEmpezar);
+            new Vector2(0.76f, 0.5f), Vector2.zero, AltoBotonPie, "Empezar", 46f, out Image imagenEmpezar);
         UtilesInterfaz.Reconectar(empezar, controlador, "Empezar");
 
         SerializedObject serializado = new SerializedObject(controlador);
@@ -201,6 +209,30 @@ public static class PantallaInstrucciones
 
         log.AppendLine("  Pantalla montada: mapa, flechas, 3+3 elementos, Menu y Empezar");
         return controlador;
+    }
+
+    private static void Poder(Scene escena, Transform columna)
+    {
+
+        const float alto = 240f;
+
+        RectTransform bloque = UtilesInterfaz.Adoptar(escena, columna, "Poder");
+        UtilesInterfaz.EnColumna(bloque, columna, 2, alto, AnchoInterior, 0f, alto);
+
+        Sprite energia = UtilesInterfaz.CargarSprite("Assets/UI/PantallaJuego/Energia.png");
+
+        RectTransform rectIcono = UtilesInterfaz.Asegurar(bloque, "Icono");
+        UtilesInterfaz.Colocar(rectIcono, new Vector2(0f, 0.5f), new Vector2(62f, 0f),
+            UtilesInterfaz.TamanoPorAlto(energia, 100f));
+        UtilesInterfaz.PonerImagen(rectIcono, energia);
+
+        TMP_Text texto = UtilesInterfaz.Etiqueta(bloque, "Texto", TextoPoder, new Vector2(0f, 0.5f),
+            new Vector2(430f, 0f), new Vector2(610f, 210f), 40f,
+            TextAlignmentOptions.Left, UtilesInterfaz.Tinta);
+
+        texto.enableWordWrapping = true;
+
+        texto.fontSizeMin = 34f;
     }
 
     private static void AsegurarEventSystem(Scene escena)

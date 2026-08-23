@@ -61,6 +61,9 @@ public static class HacerTodo
             BotonesInterfaz.MenuBotones();
             BotonesInterfaz.MenuHUD();
             PantallaInstrucciones.MenuConstruir();
+            IconoAplicacion.MenuIcono();
+
+            TipografiaProyecto.MenuAplicarTipografia();
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();

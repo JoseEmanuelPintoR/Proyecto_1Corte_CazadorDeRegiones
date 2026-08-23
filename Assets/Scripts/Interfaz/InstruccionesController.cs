@@ -122,11 +122,6 @@ public class InstruccionesController : MonoBehaviour
 
         LlenarLista(iconosRecoge, textosRecoge, region.iconosRecoge, region.nombresRecoge);
         LlenarLista(iconosEvita, textosEvita, region.iconosEvita, region.nombresEvita);
-
-        if (AudioManager.Instance != null)
-        {
-            AudioManager.Instance.ReproducirMusicaDeRegion(indice);
-        }
     }
 
     private static void Poner(Image destino, Sprite sprite)

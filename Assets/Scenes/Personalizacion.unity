@@ -178,8 +178,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Ruana
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
+  m_sharedMaterial: {fileID: -3535178621440749287, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -920,8 +920,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Sombrero llanero
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
+  m_sharedMaterial: {fileID: -3535178621440749287, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1258,8 +1258,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Vestido de danza
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
+  m_sharedMaterial: {fileID: -3535178621440749287, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1487,8 +1487,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Escribe tu nombre\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
+  m_sharedMaterial: {fileID: -3535178621440749287, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1625,8 +1625,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter text...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
+  m_sharedMaterial: {fileID: -3535178621440749287, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2092,8 +2092,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Adorno de plumas
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
+  m_sharedMaterial: {fileID: -3535178621440749287, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2229,8 +2229,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Predeterminado
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
+  m_sharedMaterial: {fileID: -3535178621440749287, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2595,8 +2595,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: GUARDAR
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
+  m_sharedMaterial: {fileID: -3535178621440749287, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3427,8 +3427,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Accesorios Disponibles
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1fde629b3a0433841ae7ed3d585f6df0, type: 2}
+  m_sharedMaterial: {fileID: 4144993164143943680, guid: 1fde629b3a0433841ae7ed3d585f6df0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3452,7 +3452,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 46
+  m_fontSize: 38.75
   m_fontSizeBase: 46
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3791,8 +3791,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Personalizar
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1fde629b3a0433841ae7ed3d585f6df0, type: 2}
+  m_sharedMaterial: {fileID: 4144993164143943680, guid: 1fde629b3a0433841ae7ed3d585f6df0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4084,8 +4084,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
+  m_sharedMaterial: {fileID: -3535178621440749287, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4362,8 +4362,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Sombrero vueltiao
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
+  m_sharedMaterial: {fileID: -3535178621440749287, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4634,8 +4634,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Nombre del Cazador
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1fde629b3a0433841ae7ed3d585f6df0, type: 2}
+  m_sharedMaterial: {fileID: 4144993164143943680, guid: 1fde629b3a0433841ae7ed3d585f6df0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4659,7 +4659,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42
+  m_fontSize: 38.75
   m_fontSizeBase: 42
   m_fontWeight: 400
   m_enableAutoSizing: 1

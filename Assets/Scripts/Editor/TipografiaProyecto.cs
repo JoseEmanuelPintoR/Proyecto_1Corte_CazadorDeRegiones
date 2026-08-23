@@ -40,6 +40,11 @@ public static class TipografiaProyecto
         "TextoDerrota", "TextoVictoria", "TextoPausa"
     };
 
+    private static readonly HashSet<string> ConLetraDeBotones = new HashSet<string>
+    {
+        "NombreIntegrante", "RolIntegrante"
+    };
+
     [MenuItem("Herramientas/Cazador de Regiones/5 · Aplicar tipografia", false, 104)]
     public static void MenuAplicarTipografia()
     {
@@ -180,7 +185,8 @@ public static class TipografiaProyecto
 
     private static bool EsDeBoton(TMP_Text texto)
     {
-        return texto.GetComponentInParent<Selectable>(true) != null;
+        return ConLetraDeBotones.Contains(texto.name)
+            || texto.GetComponentInParent<Selectable>(true) != null;
     }
 
     private static bool EsTitulo(TMP_Text texto)

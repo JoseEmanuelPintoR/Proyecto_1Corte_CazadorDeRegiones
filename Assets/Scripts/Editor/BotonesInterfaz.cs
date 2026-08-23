@@ -12,6 +12,7 @@ public static class BotonesInterfaz
     private const string CarpetaMenu = "Assets/UI/PantallaMenu";
     private const string CarpetaJuego = "Assets/UI/PantallaJuego";
     private const string CarpetaPersonalizar = "Assets/UI/PantallaPersonalizar";
+    private const string CarpetaCreditos = "Assets/UI/PantallaCreditos";
     private const string CarpetaPrendas = "Assets/UI/Prendas";
     private const string CarpetaEscenas = "Assets/Scenes";
 
@@ -29,7 +30,7 @@ public static class BotonesInterfaz
 
     private static readonly string[] CarpetasArte =
     {
-        CarpetaMenu, CarpetaJuego, CarpetaPersonalizar, CarpetaPrendas,
+        CarpetaMenu, CarpetaJuego, CarpetaPersonalizar, CarpetaCreditos, CarpetaPrendas,
         "Assets/UI/PANTALLA-INSTRUCCIONES-ANDINA",
         "Assets/UI/PANTALLA-INSTRUCCIONES-CARIBE",
         "Assets/UI/PANTALLA-INSTRUCCIONES-PACIFICO",
@@ -41,6 +42,10 @@ public static class BotonesInterfaz
     {
         "Nivel1_Andina", "Nivel2_Caribe", "Nivel3_Pacifica", "Nivel4_Orinoquia", "Nivel5_Amazonia"
     };
+
+    private const string EscenaConJoystick = "Nivel5_Amazonia";
+
+    private const float AltoControl = 120f;
 
     [MenuItem("Herramientas/Cazador de Regiones/7 · Aplicar botones nuevos", false, 106)]
     public static void MenuBotones()
@@ -151,9 +156,16 @@ public static class BotonesInterfaz
     }
 
     private static RectTransform BotonIcono(Scene escena, string nombre, string rutaSprite, Vector2 ancla,
-        Vector2 posicion, float alto, StringBuilder log, Transform padre = null)
+        Vector2 posicion, float alto, StringBuilder log, Transform padre = null, bool crear = false)
     {
         RectTransform rect = UtilesInterfaz.BuscarRect(escena, nombre);
+
+        if (rect == null && crear && padre != null)
+        {
+
+            rect = UtilesInterfaz.Asegurar(padre, nombre);
+            UtilesInterfaz.Componente<Button>(rect.gameObject);
+        }
 
         if (rect == null)
         {
@@ -406,22 +418,210 @@ public static class BotonesInterfaz
         Guardar(escena);
     }
 
+    private class Integrante
+    {
+        public string rol;
+        public string nombre;
+        public string descripcion;
+        public string icono;
+    }
+
+    private static readonly Integrante[] Integrantes =
+    {
+        new Integrante
+        {
+            rol = "Programador", nombre = "José Emanuel Pinto", icono = "IconoProgramador",
+            descripcion = "Construcción de la lógica funcional del videojuego."
+        },
+        new Integrante
+        {
+            rol = "Diseñador UX/UI", nombre = "Manuel Velasco", icono = "IconoUX-UI",
+            descripcion = "Diseño de pantallas, HUD, controles táctiles y experiencia del jugador."
+        },
+        new Integrante
+        {
+            rol = "Ilustradora", nombre = "Laura Delgado", icono = "IconoIlustradora",
+            descripcion = "Creación de personajes, animaciones, objetos, fondos y efectos visuales."
+        },
+        new Integrante
+        {
+            rol = "Documentador y coordinador", nombre = "Lowell Ortiz", icono = "IconoDocumentador",
+            descripcion = "Organización del proyecto, documentos, pruebas, evidencias y presentación."
+        },
+        new Integrante
+        {
+            rol = "Musica y Sonidos", nombre = "YouTube Music", icono = "IconoMusica",
+            descripcion = "Toda la música y los efectos de sonido se obtuvieron de esta fuente."
+        },
+    };
+
+    private static readonly Color TintaCreditos = new Color(0.33f, 0.17f, 0.05f);
+
+    private const float AnchoCreditos = 700f;
+
+    private const float AltoIntegrante = 222f;
+
+    private const float AlturaEncabezado = 250f;
+
     private static void Creditos(StringBuilder log)
     {
         Scene escena = AbrirEscena("Creditos");
-        Transform lienzo = UtilesInterfaz.BuscarRaiz(escena, "Canvas").transform;
+        GameObject objetoLienzo = UtilesInterfaz.BuscarRaiz(escena, "Canvas");
+        Transform lienzo = objetoLienzo.transform;
 
-        RectTransform columna = Armazon(escena, lienzo, $"{CarpetaMenu}/Marco.png", 26f, 230, 120, out RectTransform marco);
+        UtilesInterfaz.AsegurarLienzo(objetoLienzo);
 
-        UtilesInterfaz.EnColumna(Titulo(escena, "TituloCreditos", 76f, log), columna, 0, 170f, AnchoInterior, 0f);
-        UtilesInterfaz.EnColumna(UtilesInterfaz.BuscarRect(escena, "ImagenCreditos"),
-            columna, 1, 900f, AnchoInterior, 1f, 300f);
+        LimpiarCreditos(escena);
 
-        BotonIcono(escena, "BotonVolver", $"{CarpetaPersonalizar}/FlechaRegresar.png",
-            new Vector2(0f, 1f), new Vector2(105f, -105f), 125f, log, marco);
+        RectTransform fondo = UtilesInterfaz.Adoptar(escena, lienzo, "Fondo");
+        UtilesInterfaz.Estirar(fondo);
+        UtilesInterfaz.PonerImagen(fondo, UtilesInterfaz.CargarSprite(RutaFondoComun), false, false);
+        fondo.SetSiblingIndex(0);
 
-        log.AppendLine("  Creditos: columna con titulo e imagen + flecha de regreso");
+        RectTransform area = UtilesInterfaz.AsegurarAreaSegura(escena, lienzo);
+
+        RectTransform interior = UtilesInterfaz.Adoptar(escena, area, "Interior");
+        UtilesInterfaz.Estirar(interior);
+        interior.offsetMin = new Vector2(MargenPantalla, MargenPantalla);
+        interior.offsetMax = new Vector2(-MargenPantalla, -MargenPantalla);
+        interior.SetSiblingIndex(0);
+
+        RectTransform titulo = UtilesInterfaz.Asegurar(interior, "TituloCreditos");
+        UtilesInterfaz.Colocar(titulo, new Vector2(0.5f, 1f), new Vector2(0f, -165f), new Vector2(860f, 150f));
+        UtilesInterfaz.PonerTexto(titulo, "CREDITOS", 96f, TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
+
+        RectTransform zona = UtilesInterfaz.Adoptar(escena, interior, "ZonaMarco");
+        UtilesInterfaz.Estirar(zona);
+        zona.offsetMin = Vector2.zero;
+        zona.offsetMax = new Vector2(0f, -AlturaEncabezado);
+
+        Sprite spriteMarco = UtilesInterfaz.CargarSprite($"{CarpetaCreditos}/MarcoCreditos.png");
+        RectTransform marco = UtilesInterfaz.Adoptar(escena, zona, "Marco");
+        UtilesInterfaz.Estirar(marco);
+        UtilesInterfaz.PonerImagen(marco, spriteMarco, false, false);
+        UtilesInterfaz.AjustarProporcion(marco, spriteMarco);
+
+        RectTransform columna = UtilesInterfaz.Columna(escena, marco, "Columna", 14f, 130, 40, 70);
+
+        for (int i = 0; i < Integrantes.Length; i++)
+        {
+            RectTransform entrada = UtilesInterfaz.Adoptar(escena, columna, $"Integrante{i + 1}");
+            float alto = EntradaCreditos(entrada, Integrantes[i], log);
+
+            UtilesInterfaz.EnColumna(entrada, columna, i, alto, AnchoCreditos, 0f, alto);
+        }
+
+        Sprite condor = UtilesInterfaz.CargarSprite($"{CarpetaCreditos}/CondorCreditos.png");
+        RectTransform rectCondor = UtilesInterfaz.Adoptar(escena, columna, "CondorCreditos");
+        UtilesInterfaz.PonerImagen(rectCondor, condor);
+
+        UtilesInterfaz.EnColumna(rectCondor, columna, Integrantes.Length, 300f, AnchoCreditos, 1f, 180f);
+
+        BotonIcono(escena, "BotonVolver", $"{CarpetaCreditos}/FlechaRegresar.png",
+            new Vector2(0f, 1f), new Vector2(78f, -68f), 108f, log, interior);
+
+        log.AppendLine($"  Creditos: titulo fuera del pergamino, {Integrantes.Length} entradas y el condor abajo");
         Guardar(escena);
+    }
+
+    private static void LimpiarCreditos(Scene escena)
+    {
+
+        UtilesInterfaz.Borrar(escena, "Columna");
+        UtilesInterfaz.Borrar(escena, "TituloCreditos");
+        UtilesInterfaz.Borrar(escena, "ImagenCreditos");
+        UtilesInterfaz.Borrar(escena, "Lista");
+
+        for (int i = 1; i <= 12; i++)
+        {
+            UtilesInterfaz.Borrar(escena, $"Integrante{i}");
+        }
+    }
+
+    private static float EntradaCreditos(RectTransform entrada, Integrante datos, StringBuilder log)
+    {
+        bool conNombre = !string.IsNullOrEmpty(datos.nombre);
+
+        Encabezado(entrada, datos, log);
+
+        RectTransform rectNombre = UtilesInterfaz.Asegurar(entrada, "NombreIntegrante");
+        UtilesInterfaz.Colocar(rectNombre, new Vector2(0.5f, 1f), new Vector2(0f, -104f),
+            new Vector2(AnchoCreditos, 64f));
+
+        TMP_Text nombre = UtilesInterfaz.PonerTexto(rectNombre, datos.nombre, 54f,
+            TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
+        nombre.fontStyle = FontStyles.Bold;
+        nombre.fontSizeMin = 42f;
+        rectNombre.gameObject.SetActive(conNombre);
+
+        float yDescripcion = conNombre ? -174f : -112f;
+
+        RectTransform rectDescripcion = UtilesInterfaz.Asegurar(entrada, "Descripcion");
+        UtilesInterfaz.Colocar(rectDescripcion, new Vector2(0.5f, 1f), new Vector2(0f, yDescripcion),
+            new Vector2(660f, 90f));
+
+        TMP_Text descripcion = UtilesInterfaz.PonerTexto(rectDescripcion, datos.descripcion, 34f,
+            TextAlignmentOptions.Top, TintaCreditos);
+
+        descripcion.enableWordWrapping = true;
+        descripcion.fontSizeMin = 30f;
+        descripcion.fontStyle = FontStyles.Bold;
+
+        return conNombre ? AltoIntegrante : AltoIntegrante - 62f;
+    }
+
+    private static void Encabezado(RectTransform entrada, Integrante datos, StringBuilder log)
+    {
+
+        RectTransform fila = UtilesInterfaz.Asegurar(entrada, "Encabezado");
+        UtilesInterfaz.Colocar(fila, new Vector2(0.5f, 1f), new Vector2(0f, -36f),
+            new Vector2(AnchoCreditos, 68f));
+
+        HorizontalLayoutGroup grupo = UtilesInterfaz.Componente<HorizontalLayoutGroup>(fila.gameObject);
+        grupo.spacing = 16f;
+        grupo.padding = new RectOffset(0, 0, 0, 0);
+        grupo.childAlignment = TextAnchor.MiddleCenter;
+        grupo.childControlWidth = true;
+        grupo.childControlHeight = true;
+        grupo.childForceExpandWidth = false;
+        grupo.childForceExpandHeight = false;
+        grupo.childScaleWidth = false;
+        grupo.childScaleHeight = false;
+
+        Sprite sprite = UtilesInterfaz.CargarSprite($"{CarpetaCreditos}/{datos.icono}.png");
+
+        if (sprite == null)
+        {
+            log.AppendLine($"[aviso] Creditos: falta {CarpetaCreditos}/{datos.icono}.png");
+        }
+
+        RectTransform rectIcono = UtilesInterfaz.Asegurar(fila, "Icono");
+        rectIcono.SetSiblingIndex(0);
+        UtilesInterfaz.PonerImagen(rectIcono, sprite);
+
+        LayoutElement medidaIcono = UtilesInterfaz.Componente<LayoutElement>(rectIcono.gameObject);
+        medidaIcono.preferredWidth = 62f;
+        medidaIcono.preferredHeight = 62f;
+        medidaIcono.flexibleWidth = 0f;
+        medidaIcono.flexibleHeight = 0f;
+
+        RectTransform rectRol = UtilesInterfaz.Asegurar(fila, "RolIntegrante");
+        rectRol.SetSiblingIndex(1);
+
+        TMP_Text rol = UtilesInterfaz.PonerTexto(rectRol, datos.rol, 44f,
+            TextAlignmentOptions.Left, UtilesInterfaz.Tinta);
+
+        rol.enableAutoSizing = false;
+        rol.fontStyle = FontStyles.Bold;
+
+        ContentSizeFitter ajuste = UtilesInterfaz.Componente<ContentSizeFitter>(rectRol.gameObject);
+        ajuste.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+        ajuste.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+
+        LayoutElement medidaRol = UtilesInterfaz.Componente<LayoutElement>(rectRol.gameObject);
+        medidaRol.preferredHeight = 64f;
+        medidaRol.flexibleWidth = 0f;
+        medidaRol.flexibleHeight = 0f;
     }
 
     [MenuItem("Herramientas/Cazador de Regiones/8 · Rehacer HUD de niveles", false, 107)]
@@ -476,6 +676,39 @@ public static class BotonesInterfaz
         log.AppendLine($"  {escena.name}: salto 11 · caida x2.5");
     }
 
+    private static int VidasDeLaEscena(Scene escena, StringBuilder log)
+    {
+        GameManager gestor = Object.FindFirstObjectByType<GameManager>(FindObjectsInactive.Include);
+
+        if (gestor == null)
+        {
+            log.AppendLine($"[aviso] {escena.name}: sin GameManager, se asumen 3 corazones");
+            return 3;
+        }
+
+        SerializedObject serializado = new SerializedObject(gestor);
+        return Mathf.Clamp(serializado.FindProperty("vidas").intValue, 1, 6);
+    }
+
+    private static void BorrarSobrantes(Transform padre, string prefijo, int cuantos)
+    {
+
+        for (int i = padre.childCount - 1; i >= 0; i--)
+        {
+            Transform hijo = padre.GetChild(i);
+
+            if (!hijo.name.StartsWith(prefijo))
+            {
+                continue;
+            }
+
+            if (int.TryParse(hijo.name.Substring(prefijo.Length), out int numero) && numero > cuantos)
+            {
+                Object.DestroyImmediate(hijo.gameObject);
+            }
+        }
+    }
+
     private static void RehacerHUD(Scene escena, StringBuilder log)
     {
         GameObject objetoLienzo = UtilesInterfaz.BuscarRaiz(escena, "Canvas");
@@ -492,21 +725,30 @@ public static class BotonesInterfaz
         Sprite lleno = UtilesInterfaz.CargarSprite($"{CarpetaJuego}/CorazonRojo.png");
         Sprite vacio = UtilesInterfaz.CargarSprite($"{CarpetaJuego}/CorazonBlanco.png");
 
-        RectTransform contenedorCorazones = UtilesInterfaz.Asegurar(area, "Corazones");
-        UtilesInterfaz.Colocar(contenedorCorazones, new Vector2(0f, 1f), new Vector2(250f, -130f), new Vector2(360f, 100f));
+        int vidas = VidasDeLaEscena(escena, log);
 
-        Image[] corazones = new Image[3];
+        float paso = vidas <= 3 ? 110f : 96f;
+        float ladoCorazon = vidas <= 3 ? 88f : 82f;
+
+        RectTransform contenedorCorazones = UtilesInterfaz.Asegurar(area, "Corazones");
+        UtilesInterfaz.Colocar(contenedorCorazones, new Vector2(0f, 1f), new Vector2(250f, -130f),
+            new Vector2(vidas * paso, 100f));
+
+        Image[] corazones = new Image[vidas];
 
         for (int i = 0; i < corazones.Length; i++)
         {
             RectTransform rect = UtilesInterfaz.Asegurar(contenedorCorazones, $"Corazon{i + 1}");
-            UtilesInterfaz.Colocar(rect, new Vector2(0.5f, 0.5f), new Vector2((i - 1) * 110f, 0f), new Vector2(88f, 88f));
+            UtilesInterfaz.Colocar(rect, new Vector2(0.5f, 0.5f),
+                new Vector2((i - (vidas - 1) * 0.5f) * paso, 0f), new Vector2(ladoCorazon, ladoCorazon));
             corazones[i] = UtilesInterfaz.PonerImagen(rect, lleno);
         }
 
+        BorrarSobrantes(contenedorCorazones, "Corazon", vidas);
+
         Sprite marcoTiempo = UtilesInterfaz.CargarSprite($"{CarpetaJuego}/MarcoTiempo.png");
         RectTransform contenedorTiempo = UtilesInterfaz.Asegurar(area, "MarcoTiempo");
-        UtilesInterfaz.Colocar(contenedorTiempo, new Vector2(0.5f, 1f), new Vector2(0f, -130f),
+        UtilesInterfaz.Colocar(contenedorTiempo, new Vector2(0.5f, 1f), new Vector2(120f, -130f),
             UtilesInterfaz.TamanoPorAlto(marcoTiempo, 130f));
         UtilesInterfaz.PonerImagen(contenedorTiempo, marcoTiempo);
 
@@ -553,31 +795,158 @@ public static class BotonesInterfaz
 
         PlayerController jugador = Object.FindFirstObjectByType<PlayerController>(FindObjectsInactive.Include);
 
-        BotonIcono(escena, "BotonIzquierda", $"{CarpetaJuego}/Izquierda.png",
-            new Vector2(0f, 0f), new Vector2(200f, 210f), 150f, log, area);
-        BotonIcono(escena, "BotonDerecha", $"{CarpetaJuego}/Derecha.png",
-            new Vector2(0f, 0f), new Vector2(430f, 210f), 150f, log, area);
-        BotonIcono(escena, "BotonSalto", $"{CarpetaJuego}/Arriba.png",
-            new Vector2(1f, 0f), new Vector2(-200f, 210f), 150f, log, area);
-        BotonIcono(escena, "BotonPowerUp", $"{CarpetaJuego}/Energia.png",
-            new Vector2(1f, 0f), new Vector2(-200f, 420f), 150f, log, area);
-
-        Sostener(escena, "BotonIzquierda", BotonMovimiento.Direccion.Izquierda, jugador, log);
-        Sostener(escena, "BotonDerecha", BotonMovimiento.Direccion.Derecha, jugador, log);
-        Sostener(escena, "BotonSalto", BotonMovimiento.Direccion.Salto, jugador, log);
-
-        RectTransform rectPowerUp = UtilesInterfaz.BuscarRect(escena, "TextoPowerUp");
-        TMP_Text textoPowerUp = null;
-        RectTransform botonPowerUp = UtilesInterfaz.BuscarRect(escena, "BotonPowerUp");
-
-        if (rectPowerUp != null && botonPowerUp != null)
+        if (escena.name == EscenaConJoystick)
         {
-            rectPowerUp.SetParent(botonPowerUp, false);
-            UtilesInterfaz.Colocar(rectPowerUp, new Vector2(0.5f, 1f), new Vector2(0f, 46f), new Vector2(240f, 60f));
-            textoPowerUp = UtilesInterfaz.PonerTexto(rectPowerUp, "0/3", 40f, TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
+
+            UtilesInterfaz.Borrar(escena, "BotonIzquierda");
+            UtilesInterfaz.Borrar(escena, "BotonDerecha");
+
+            Joystick(escena, area, jugador, log);
+        }
+        else
+        {
+            UtilesInterfaz.Borrar(escena, "Joystick");
+
+            BotonIcono(escena, "BotonIzquierda", $"{CarpetaJuego}/Izquierda.png",
+                new Vector2(0f, 0f), new Vector2(165f, 210f), AltoControl, log, area, true);
+            BotonIcono(escena, "BotonDerecha", $"{CarpetaJuego}/Derecha.png",
+                new Vector2(0f, 0f), new Vector2(445f, 210f), AltoControl, log, area, true);
+
+            Sostener(escena, "BotonIzquierda", BotonMovimiento.Direccion.Izquierda, jugador, log);
+            Sostener(escena, "BotonDerecha", BotonMovimiento.Direccion.Derecha, jugador, log);
         }
 
+        BotonIcono(escena, "BotonSalto", $"{CarpetaJuego}/Arriba.png",
+            new Vector2(1f, 0f), new Vector2(-165f, 210f), AltoControl, log, area);
+        Sostener(escena, "BotonSalto", BotonMovimiento.Direccion.Salto, jugador, log);
+
+        TMP_Text textoPowerUp = Medidor(escena, area, log);
+
         ConectarHUD(textoPuntos, textoTiempo, textoPowerUp, textoNombre, corazones, lleno, vacio, escena, log);
+    }
+
+    private static void Joystick(Scene escena, RectTransform area, PlayerController jugador, StringBuilder log)
+    {
+        Sprite circulo = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Knob.psd");
+
+        RectTransform baseJoystick = UtilesInterfaz.Adoptar(escena, area, "Joystick");
+        UtilesInterfaz.Colocar(baseJoystick, new Vector2(0f, 0f), new Vector2(250f, 260f), new Vector2(300f, 300f));
+
+        Image fondo = UtilesInterfaz.PonerImagen(baseJoystick, circulo, true);
+        fondo.color = new Color(1f, 1f, 1f, 0.32f);
+
+        fondo.enabled = true;
+
+        RectTransform mango = UtilesInterfaz.Asegurar(baseJoystick, "Mango");
+        UtilesInterfaz.Colocar(mango, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(130f, 130f));
+
+        Image imagenMango = UtilesInterfaz.PonerImagen(mango, circulo);
+        imagenMango.color = new Color(1f, 0.97f, 0.88f, 0.95f);
+        imagenMango.enabled = true;
+
+        JoystickVirtual control = UtilesInterfaz.Componente<JoystickVirtual>(baseJoystick.gameObject);
+
+        SerializedObject serializado = new SerializedObject(control);
+        serializado.FindProperty("jugador").objectReferenceValue = jugador;
+        serializado.FindProperty("mango").objectReferenceValue = mango;
+        serializado.FindProperty("radio").floatValue = 110f;
+        serializado.ApplyModifiedProperties();
+
+        if (jugador == null)
+        {
+            log.AppendLine($"[aviso] {escena.name}: el joystick quedo sin referencia al jugador");
+        }
+
+        log.AppendLine($"  {escena.name}: joystick en lugar de las flechas");
+    }
+
+    private static TMP_Text Medidor(Scene escena, RectTransform area, StringBuilder log)
+    {
+        RectTransform boton = UtilesInterfaz.BuscarRect(escena, "BotonPowerUp");
+
+        if (boton == null)
+        {
+            log.AppendLine($"[aviso] {escena.name}: no existe BotonPowerUp");
+            return null;
+        }
+
+        if (boton.parent != area)
+        {
+            boton.SetParent(area, false);
+        }
+
+        Sprite energia = UtilesInterfaz.CargarSprite($"{CarpetaJuego}/Energia.png");
+        Vector2 tamano = UtilesInterfaz.TamanoPorAlto(energia, AltoControl);
+
+        UtilesInterfaz.Colocar(boton, new Vector2(1f, 0f), new Vector2(-390f, 210f), tamano);
+
+        Button control = UtilesInterfaz.Componente<Button>(boton.gameObject);
+        control.targetGraphic = UtilesInterfaz.ZonaClicable(boton);
+
+        GameManager gestor = Object.FindFirstObjectByType<GameManager>(FindObjectsInactive.Include);
+
+        if (gestor != null)
+        {
+            UtilesInterfaz.Reconectar(control, gestor, "ActivarPowerUp");
+        }
+        else
+        {
+            log.AppendLine($"[aviso] {escena.name}: BotonPowerUp quedo sin GameManager");
+        }
+
+        RectTransform rectMarco = UtilesInterfaz.Asegurar(boton, "Marco");
+        UtilesInterfaz.Colocar(rectMarco, new Vector2(0.5f, 0.5f), Vector2.zero,
+            new Vector2(AltoControl * 1.28f, AltoControl * 1.28f));
+
+        Image placa = UtilesInterfaz.PonerImagen(rectMarco,
+            AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Knob.psd"));
+        placa.color = new Color(0.08f, 0.08f, 0.07f, 0.55f);
+        placa.enabled = true;
+        rectMarco.SetSiblingIndex(0);
+
+        RectTransform rectHalo = UtilesInterfaz.Asegurar(boton, "Halo");
+        UtilesInterfaz.Colocar(rectHalo, new Vector2(0.5f, 0.5f), Vector2.zero,
+            UtilesInterfaz.TamanoPorAlto(energia, AltoControl * 1.55f));
+        Image halo = UtilesInterfaz.PonerImagen(rectHalo, energia);
+        halo.color = new Color(1f, 0.86f, 0.35f, 0f);
+        rectHalo.SetSiblingIndex(1);
+
+        RectTransform rectBase = UtilesInterfaz.Asegurar(boton, "Base");
+        UtilesInterfaz.Colocar(rectBase, new Vector2(0.5f, 0.5f), Vector2.zero, tamano);
+        Image vacia = UtilesInterfaz.PonerImagen(rectBase, energia);
+        vacia.color = new Color(0.72f, 0.72f, 0.68f, 0.8f);
+        rectBase.SetSiblingIndex(2);
+
+        RectTransform rectRelleno = UtilesInterfaz.Asegurar(boton, "Relleno");
+        UtilesInterfaz.Colocar(rectRelleno, new Vector2(0.5f, 0.5f), Vector2.zero, tamano);
+        Image relleno = UtilesInterfaz.PonerImagen(rectRelleno, energia);
+
+        relleno.type = Image.Type.Filled;
+        relleno.fillMethod = Image.FillMethod.Vertical;
+        relleno.fillOrigin = (int)Image.OriginVertical.Bottom;
+        relleno.fillAmount = 0f;
+        rectRelleno.SetSiblingIndex(3);
+
+        RectTransform rectTexto = UtilesInterfaz.BuscarRect(escena, "TextoPowerUp");
+        TMP_Text texto = null;
+
+        if (rectTexto != null)
+        {
+            rectTexto.SetParent(boton, false);
+            UtilesInterfaz.Colocar(rectTexto, new Vector2(0.5f, 1f), new Vector2(0f, 46f), new Vector2(240f, 60f));
+            texto = UtilesInterfaz.PonerTexto(rectTexto, "0/3", 40f, TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
+            rectTexto.SetSiblingIndex(4);
+        }
+
+        MedidorPowerUp medidor = UtilesInterfaz.Componente<MedidorPowerUp>(boton.gameObject);
+
+        SerializedObject serializado = new SerializedObject(medidor);
+        serializado.FindProperty("relleno").objectReferenceValue = relleno;
+        serializado.FindProperty("halo").objectReferenceValue = halo;
+        serializado.ApplyModifiedProperties();
+
+        log.AppendLine($"  {escena.name}: medidor de power up a la izquierda del salto");
+        return texto;
     }
 
     private static void Sostener(Scene escena, string nombre, BotonMovimiento.Direccion direccion,

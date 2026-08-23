@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
     {
         juegoFinalizado = true;
 
-        Debug.Log("�NIVEL COMPLETADO!");
+        Debug.Log("¡NIVEL COMPLETADO!");
 
         if (panelVictoria != null)
         {
@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour
     {
         juegoFinalizado = true;
 
-        Debug.Log("�NIVEL PERDIDO!");
+        Debug.Log("¡NIVEL PERDIDO!");
 
         if (panelDerrota != null)
         {
@@ -179,7 +179,7 @@ public class GameManager : MonoBehaviour
 
         if (cargaPowerUp < cargaMaxima)
         {
-            Debug.Log("Power Up todav�a no est� listo");
+            Debug.Log("Power Up todavía no está listo");
             return;
         }
 
@@ -194,7 +194,7 @@ public class GameManager : MonoBehaviour
         powerUpActivo = true;
         cargaPowerUp = 0;
 
-        Debug.Log("�POWER UP ACTIVADO!");
+        Debug.Log("¡POWER UP ACTIVADO!");
 
         yield return new WaitForSeconds(duracionPowerUp);
 

@@ -97,7 +97,7 @@ public class AudioManager : MonoBehaviour
 
     private void CargarClips()
     {
-        musicaMenu = Cargar("Cancion Menu");
+        musicaMenu = Cargar("Menu");
         musicaAndina = Cargar("Region Andina");
         musicaCaribe = Cargar("Region Caribe");
         musicaPacifica = Cargar("Region Pacifica");
@@ -155,11 +155,6 @@ public class AudioManager : MonoBehaviour
             case "Nivel5_Amazonia":
                 clip = musicaAmazonia;
                 break;
-            case "Instrucciones":
-
-                clip = MusicaDeRegion(
-                    PlayerPrefs.GetInt(InstruccionesController.ClaveRegion, 0));
-                break;
             default:
 
                 clip = musicaMenu;
@@ -167,24 +162,6 @@ public class AudioManager : MonoBehaviour
         }
 
         ReproducirMusica(clip);
-    }
-
-    private AudioClip MusicaDeRegion(int indice)
-    {
-        switch (indice)
-        {
-            case 0: return musicaAndina;
-            case 1: return musicaCaribe;
-            case 2: return musicaPacifica;
-            case 3: return musicaOrinoquia;
-            case 4: return musicaAmazonia;
-            default: return musicaMenu;
-        }
-    }
-
-    public void ReproducirMusicaDeRegion(int indice)
-    {
-        ReproducirMusica(MusicaDeRegion(indice));
     }
 
     private void ReproducirMusica(AudioClip clip)
