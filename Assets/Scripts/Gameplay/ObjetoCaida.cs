@@ -17,14 +17,76 @@ public class ObjetoCaida : MonoBehaviour
     [SerializeField] private float velocidadMaximaPowerUp = 2f;
     [SerializeField] private float factorGravedadPowerUp = 0.25f;
 
+    [Header("Limites horizontales")]
+    [Tooltip("Radio del objeto, para que no quede medio afuera al llegar al borde.")]
+    [SerializeField] private float radioObjeto = 0.5f;
+
+    private Camera camara;
+    private Vector2Int ultimaPantalla;
+    private float limiteHorizontal;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        camara = Camera.main;
+
+        CalcularLimite();
+    }
+
+    private void CalcularLimite()
+    {
+        ultimaPantalla = new Vector2Int(Screen.width, Screen.height);
+
+        if (camara == null)
+        {
+            camara = Camera.main;
+        }
+
+        float mitadAncho = LimitesCamara.MitadAncho(camara, transform.position.z);
+
+        if (mitadAncho <= 0f)
+        {
+            return;
+        }
+
+        limiteHorizontal = Mathf.Max(0f, mitadAncho - radioObjeto);
+    }
+
+    private void SujetarDentroDePantalla()
+    {
+        if (limiteHorizontal <= 0f)
+        {
+            return;
+        }
+
+        Vector3 posicion = transform.position;
+
+        if (posicion.x >= -limiteHorizontal && posicion.x <= limiteHorizontal)
+        {
+            return;
+        }
+
+        posicion.x = Mathf.Clamp(posicion.x, -limiteHorizontal, limiteHorizontal);
+        transform.position = posicion;
+
+        Vector3 velocidadActual = rb.linearVelocity;
+        velocidadActual.x = 0f;
+        rb.linearVelocity = velocidadActual;
     }
 
     private void FixedUpdate()
     {
-        if (rb == null || GameManager.Instance == null)
+        if (rb == null)
+            return;
+
+        if (Screen.width != ultimaPantalla.x || Screen.height != ultimaPantalla.y)
+        {
+            CalcularLimite();
+        }
+
+        SujetarDentroDePantalla();
+
+        if (GameManager.Instance == null)
             return;
 
         if (GameManager.Instance.PowerUpActivo)

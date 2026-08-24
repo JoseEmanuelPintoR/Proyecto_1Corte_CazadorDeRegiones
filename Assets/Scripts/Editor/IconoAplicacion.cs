@@ -19,6 +19,8 @@ public static class IconoAplicacion
 
         Nombres(log);
 
+        ConfigurarPantalla(log);
+
         Texture2D portada = PrepararPortada(log);
 
         if (portada != null)
@@ -41,6 +43,20 @@ public static class IconoAplicacion
 
         log.AppendLine($"  Nombre: {NombreJuego}");
         log.AppendLine($"  Paquete de Android: {IdentificadorAndroid}");
+    }
+
+    private static void ConfigurarPantalla(StringBuilder log)
+    {
+
+        PlayerSettings.defaultInterfaceOrientation = UIOrientation.Portrait;
+
+        PlayerSettings.allowedAutorotateToPortrait = true;
+        PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
+        PlayerSettings.allowedAutorotateToLandscapeLeft = false;
+        PlayerSettings.allowedAutorotateToLandscapeRight = false;
+        PlayerSettings.useAnimatedAutorotation = false;
+
+        log.AppendLine("  Pantalla: vertical fija (sin boca abajo ni horizontal)");
     }
 
     private static Texture2D PrepararPortada(StringBuilder log)

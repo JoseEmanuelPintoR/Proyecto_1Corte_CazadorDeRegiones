@@ -43,9 +43,19 @@ public static class BotonesInterfaz
         "Nivel1_Andina", "Nivel2_Caribe", "Nivel3_Pacifica", "Nivel4_Orinoquia", "Nivel5_Amazonia"
     };
 
-    private const string EscenaConJoystick = "Nivel5_Amazonia";
-
     private const float AltoControl = 120f;
+
+    private const float FuerzaSalto = 9.5f;
+
+    private const float MargenBordeJugador = 0.02f;
+
+    private const float PorcionFiguraJugador = 0.55f;
+
+    private const float AltoTarjeta = 1120f;
+
+    private const int RellenoTarjeta = 46;
+
+    private const float LetraBoton = 44f;
 
     [MenuItem("Herramientas/Cazador de Regiones/7 · Aplicar botones nuevos", false, 106)]
     public static void MenuBotones()
@@ -647,7 +657,7 @@ public static class BotonesInterfaz
 
             Scene escena = AbrirEscena(nombre);
 
-            AjustarSalto(escena, log);
+            AjustarJugador(escena, log);
             RehacerHUD(escena, log);
             RehacerPaneles(escena, log);
 
@@ -657,7 +667,7 @@ public static class BotonesInterfaz
         Debug.Log(log.ToString());
     }
 
-    private static void AjustarSalto(Scene escena, StringBuilder log)
+    private static void AjustarJugador(Scene escena, StringBuilder log)
     {
         PlayerController jugador = Object.FindFirstObjectByType<PlayerController>(FindObjectsInactive.Include);
 
@@ -668,12 +678,15 @@ public static class BotonesInterfaz
         }
 
         SerializedObject serializado = new SerializedObject(jugador);
-        serializado.FindProperty("fuerzaSalto").floatValue = 11f;
+        serializado.FindProperty("fuerzaSalto").floatValue = FuerzaSalto;
         serializado.FindProperty("multiplicadorCaida").floatValue = 2.5f;
         serializado.FindProperty("multiplicadorSaltoCorto").floatValue = 2f;
+
+        serializado.FindProperty("margenBorde").floatValue = MargenBordeJugador;
+        serializado.FindProperty("porcionFigura").floatValue = PorcionFiguraJugador;
         serializado.ApplyModifiedProperties();
 
-        log.AppendLine($"  {escena.name}: salto 11 · caida x2.5");
+        log.AppendLine($"  {escena.name}: salto {FuerzaSalto} · caida x2.5 · alcance hasta el borde");
     }
 
     private static int VidasDeLaEscena(Scene escena, StringBuilder log)
@@ -795,26 +808,17 @@ public static class BotonesInterfaz
 
         PlayerController jugador = Object.FindFirstObjectByType<PlayerController>(FindObjectsInactive.Include);
 
-        if (escena.name == EscenaConJoystick)
-        {
+        RectTransform joystick = Joystick(escena, area, jugador, log);
 
-            UtilesInterfaz.Borrar(escena, "BotonIzquierda");
-            UtilesInterfaz.Borrar(escena, "BotonDerecha");
+        RectTransform izquierda = BotonIcono(escena, "BotonIzquierda", $"{CarpetaJuego}/Izquierda.png",
+            new Vector2(0f, 0f), new Vector2(165f, 210f), AltoControl, log, area, true);
+        RectTransform derecha = BotonIcono(escena, "BotonDerecha", $"{CarpetaJuego}/Derecha.png",
+            new Vector2(0f, 0f), new Vector2(445f, 210f), AltoControl, log, area, true);
 
-            Joystick(escena, area, jugador, log);
-        }
-        else
-        {
-            UtilesInterfaz.Borrar(escena, "Joystick");
+        Sostener(escena, "BotonIzquierda", BotonMovimiento.Direccion.Izquierda, jugador, log);
+        Sostener(escena, "BotonDerecha", BotonMovimiento.Direccion.Derecha, jugador, log);
 
-            BotonIcono(escena, "BotonIzquierda", $"{CarpetaJuego}/Izquierda.png",
-                new Vector2(0f, 0f), new Vector2(165f, 210f), AltoControl, log, area, true);
-            BotonIcono(escena, "BotonDerecha", $"{CarpetaJuego}/Derecha.png",
-                new Vector2(0f, 0f), new Vector2(445f, 210f), AltoControl, log, area, true);
-
-            Sostener(escena, "BotonIzquierda", BotonMovimiento.Direccion.Izquierda, jugador, log);
-            Sostener(escena, "BotonDerecha", BotonMovimiento.Direccion.Derecha, jugador, log);
-        }
+        ConectarSelector(escena, objetoLienzo, joystick, izquierda, derecha, log);
 
         BotonIcono(escena, "BotonSalto", $"{CarpetaJuego}/Arriba.png",
             new Vector2(1f, 0f), new Vector2(-165f, 210f), AltoControl, log, area);
@@ -822,10 +826,35 @@ public static class BotonesInterfaz
 
         TMP_Text textoPowerUp = Medidor(escena, area, log);
 
+        AjustarHojas(escena, log);
+
         ConectarHUD(textoPuntos, textoTiempo, textoPowerUp, textoNombre, corazones, lleno, vacio, escena, log);
     }
 
-    private static void Joystick(Scene escena, RectTransform area, PlayerController jugador, StringBuilder log)
+    private static void AjustarHojas(Scene escena, StringBuilder log)
+    {
+
+        RectTransform hojas = UtilesInterfaz.BuscarRect(escena, "PanelHojas");
+
+        if (hojas == null)
+        {
+            return;
+        }
+
+        Image imagen = hojas.GetComponent<Image>();
+
+        if (imagen != null)
+        {
+
+            imagen.raycastTarget = false;
+        }
+
+        hojas.SetAsFirstSibling();
+
+        log.AppendLine($"  {escena.name}: las hojas ya no tapan los toques ni los paneles");
+    }
+
+    private static RectTransform Joystick(Scene escena, RectTransform area, PlayerController jugador, StringBuilder log)
     {
         Sprite circulo = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Knob.psd");
 
@@ -857,7 +886,37 @@ public static class BotonesInterfaz
             log.AppendLine($"[aviso] {escena.name}: el joystick quedo sin referencia al jugador");
         }
 
-        log.AppendLine($"  {escena.name}: joystick en lugar de las flechas");
+        return baseJoystick;
+    }
+
+    private static void ConectarSelector(Scene escena, GameObject objetoLienzo, RectTransform joystick,
+        RectTransform izquierda, RectTransform derecha, StringBuilder log)
+    {
+
+        SelectorControles selector = UtilesInterfaz.Componente<SelectorControles>(objetoLienzo);
+
+        SerializedObject serializado = new SerializedObject(selector);
+        serializado.FindProperty("joystick").objectReferenceValue = joystick != null ? joystick.gameObject : null;
+        serializado.FindProperty("botonIzquierda").objectReferenceValue = izquierda != null ? izquierda.gameObject : null;
+        serializado.FindProperty("botonDerecha").objectReferenceValue = derecha != null ? derecha.gameObject : null;
+        serializado.ApplyModifiedProperties();
+
+        if (joystick != null)
+        {
+            joystick.gameObject.SetActive(true);
+        }
+
+        if (izquierda != null)
+        {
+            izquierda.gameObject.SetActive(true);
+        }
+
+        if (derecha != null)
+        {
+            derecha.gameObject.SetActive(true);
+        }
+
+        log.AppendLine($"  {escena.name}: joystick y flechas; el jugador elige en Instrucciones");
     }
 
     private static TMP_Text Medidor(Scene escena, RectTransform area, StringBuilder log)
@@ -1019,6 +1078,19 @@ public static class BotonesInterfaz
         log.AppendLine($"  {escena.name}: HUD con corazones, reloj y nombre");
     }
 
+    private static readonly (string nombre, string sprite, string rotulo)[] BotonesPausa =
+    {
+        ("BotonContinuar",     "BotonEmpezar", "CONTINUAR"),
+        ("BotonVolver",        "BotonMenu",    "VOLVER"),
+        ("BotonMenuPrincipal", "BotonMenu",    "MENU PRINCIPAL"),
+    };
+
+    private static readonly (string nombre, string sprite, string rotulo)[] BotonesFinal =
+    {
+        ("BotonReintentar", "BotonEmpezar", "REINTENTAR"),
+        ("BotonVolver",     "BotonMenu",    "VOLVER"),
+    };
+
     private static void RehacerPaneles(Scene escena, StringBuilder log)
     {
         GameManager gestor = Object.FindFirstObjectByType<GameManager>(FindObjectsInactive.Include);
@@ -1041,52 +1113,102 @@ public static class BotonesInterfaz
 
         UtilesInterfaz.Estirar(panel);
 
-        RectTransform velo = UtilesInterfaz.Asegurar(panel, "Velo");
+        panel.SetAsLastSibling();
+
+        RectTransform velo = AsegurarEnPanel(panel, panel, "Velo");
         UtilesInterfaz.Estirar(velo);
         UtilesInterfaz.Velo(velo);
         velo.SetSiblingIndex(0);
 
         Sprite spriteMarco = UtilesInterfaz.CargarSprite($"{CarpetaMenu}/Marco.png");
-        RectTransform marco = UtilesInterfaz.Asegurar(panel, "Marco");
-        UtilesInterfaz.Colocar(marco, new Vector2(0.5f, 0.5f), Vector2.zero,
-            UtilesInterfaz.TamanoPorAlto(spriteMarco, 1000f));
-        UtilesInterfaz.PonerImagen(marco, spriteMarco);
+        Vector2 tamano = UtilesInterfaz.TamanoPorAlto(spriteMarco, AltoTarjeta);
+
+        RectTransform tarjeta = AsegurarEnPanel(panel, panel, "Tarjeta");
+        UtilesInterfaz.Colocar(tarjeta, new Vector2(0.5f, 0.5f), Vector2.zero, tamano);
+        tarjeta.SetSiblingIndex(1);
+
+        RectTransform fondo = AsegurarEnPanel(panel, tarjeta, "Fondo");
+        UtilesInterfaz.Estirar(fondo);
+        UtilesInterfaz.PonerImagen(fondo, UtilesInterfaz.CargarSprite(RutaFondoComun), false, false);
+        fondo.SetSiblingIndex(0);
+
+        RectTransform marco = AsegurarEnPanel(panel, tarjeta, "Marco");
+        UtilesInterfaz.Estirar(marco);
+        UtilesInterfaz.PonerImagen(marco, spriteMarco, false, false);
+        UtilesInterfaz.AjustarProporcion(marco, spriteMarco);
         marco.SetSiblingIndex(1);
+
+        AsegurarEnPanel(panel, tarjeta, "Columna");
+
+        BorrarEnPanel(panel, "Interior");
+
+        RectTransform columna = UtilesInterfaz.ColumnaEn(tarjeta, "Columna", 18f, 90, 80, RellenoTarjeta);
+        columna.SetSiblingIndex(2);
+
+        float ancho = tamano.x - RellenoTarjeta * 2f;
 
         RectTransform titulo = UtilesInterfaz.BuscarRect(escena, nombreTitulo);
 
         if (titulo != null)
         {
-            UtilesInterfaz.Colocar(titulo, new Vector2(0.5f, 0.5f), new Vector2(0f, 260f), new Vector2(880f, 180f));
-            UtilesInterfaz.Formato(titulo.GetComponent<TMP_Text>(), 82f, TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
+            UtilesInterfaz.Formato(titulo.GetComponent<TMP_Text>(), 68f,
+                TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
+            UtilesInterfaz.EnColumna(titulo, columna, 0, 150f, ancho, 0f);
         }
 
-        string empezar = $"{CarpetaComun}/BotonEmpezar.png";
-        string menu = $"{CarpetaComun}/BotonMenu.png";
+        UtilesInterfaz.EspaciadorEn(columna, "Aire", 1, 1f);
 
-        if (esPausa)
+        (string nombre, string sprite, string rotulo)[] lista = esPausa ? BotonesPausa : BotonesFinal;
+
+        for (int i = 0; i < lista.Length; i++)
         {
-            BotonDePanel(panel, "BotonContinuar", empezar, new Vector2(0f, -180f), 100f, log);
-            BotonDePanel(panel, "BotonVolver", menu, new Vector2(0f, -320f), 100f, log);
+            RectTransform boton = BotonDePanel(panel, lista[i].nombre,
+                $"{CarpetaComun}/{lista[i].sprite}.png", lista[i].rotulo, log);
 
-            RectTransform botonMenu = BotonDePanel(panel, "BotonMenuPrincipal", menu, new Vector2(0f, -460f), 100f, log);
+            UtilesInterfaz.EnColumna(boton, columna, 2 + i, 150f, ancho, 0f, 115f);
 
-            if (botonMenu != null && gestor != null)
+            if (lista[i].nombre == "BotonMenuPrincipal" && boton != null && gestor != null)
             {
-                Button boton = UtilesInterfaz.Componente<Button>(botonMenu.gameObject);
-                UtilesInterfaz.Reconectar(boton, gestor, "VolverMenuPrincipal");
-                Etiquetar(boton, "Menu principal", 44f);
+                UtilesInterfaz.Reconectar(boton.GetComponent<Button>(), gestor, "VolverMenuPrincipal");
             }
         }
-        else
+
+        UtilesInterfaz.EspaciadorEn(columna, "AireAbajo", 2 + lista.Length, 1.1f);
+
+        log.AppendLine($"  {escena.name}: {nombrePanel} en tarjeta de {tamano.x:0}x{tamano.y:0} sobre el velo");
+    }
+
+    private static void BorrarEnPanel(RectTransform panel, string nombre)
+    {
+
+        Transform sobrante = BuscarEnHijos(panel, nombre);
+
+        if (sobrante != null && sobrante != panel)
         {
-            BotonDePanel(panel, "BotonReintentar", empezar, new Vector2(0f, -180f), 100f, log);
-            BotonDePanel(panel, "BotonVolver", menu, new Vector2(0f, -320f), 100f, log);
+            Object.DestroyImmediate(sobrante.gameObject);
         }
     }
 
+    private static RectTransform AsegurarEnPanel(RectTransform panel, Transform padre, string nombre)
+    {
+
+        Transform existente = BuscarEnHijos(panel, nombre);
+
+        if (existente is RectTransform encontrado)
+        {
+            if (encontrado.parent != padre)
+            {
+                encontrado.SetParent(padre, false);
+            }
+
+            return encontrado;
+        }
+
+        return UtilesInterfaz.Asegurar(padre, nombre);
+    }
+
     private static RectTransform BotonDePanel(RectTransform panel, string nombre, string rutaSprite,
-        Vector2 posicion, float alto, StringBuilder log)
+        string rotulo, StringBuilder log)
     {
         Transform existente = BuscarEnHijos(panel, nombre);
         RectTransform rect;
@@ -1101,13 +1223,10 @@ public static class BotonesInterfaz
             nuevo.transform.SetParent(panel, false);
             rect = nuevo.GetComponent<RectTransform>();
 
-            RectTransform etiqueta = UtilesInterfaz.Asegurar(rect, "Texto");
-            UtilesInterfaz.Estirar(etiqueta);
-            UtilesInterfaz.PonerTexto(etiqueta, nombre, 44f, TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
+            log.AppendLine($"[aviso] {panel.name}: se creo {nombre}; revisa su OnClick en la escena");
         }
 
         Sprite sprite = UtilesInterfaz.CargarSprite(rutaSprite);
-        UtilesInterfaz.Colocar(rect, new Vector2(0.5f, 0.5f), posicion, UtilesInterfaz.TamanoPorAlto(sprite, alto));
 
         Image imagen = UtilesInterfaz.PonerImagen(rect, sprite, true);
         Button boton = UtilesInterfaz.Componente<Button>(rect.gameObject);
@@ -1115,26 +1234,18 @@ public static class BotonesInterfaz
 
         TMP_Text texto = UtilesInterfaz.TextoDeBoton(boton);
 
-        if (texto != null)
-        {
-            UtilesInterfaz.Estirar(texto.rectTransform);
-            UtilesInterfaz.Formato(texto, 44f, TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
-        }
-
-        return rect;
-    }
-
-    private static void Etiquetar(Button boton, string contenido, float tamano)
-    {
-        TMP_Text texto = UtilesInterfaz.TextoDeBoton(boton);
-
         if (texto == null)
         {
-            return;
+            texto = UtilesInterfaz.PonerTexto(UtilesInterfaz.Asegurar(rect, "Texto"), rotulo, LetraBoton,
+                TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
         }
 
-        texto.text = contenido;
-        texto.fontSize = tamano;
+        UtilesInterfaz.Estirar(texto.rectTransform);
+        texto.text = rotulo;
+        UtilesInterfaz.Formato(texto, LetraBoton, TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
+        texto.gameObject.SetActive(true);
+
+        return rect;
     }
 
     private static Transform BuscarEnHijos(Transform padre, string nombre)

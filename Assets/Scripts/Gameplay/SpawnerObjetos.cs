@@ -20,6 +20,10 @@ public class SpawnerObjetos : MonoBehaviour
     [Tooltip("Radio del objeto que cae, para que no quede medio afuera al borde.")]
     [SerializeField] private float radioObjeto = 0.5f;
 
+    [Tooltip("Cuanto se permite que un objeto caiga mas afuera de donde llega el centro del " +
+             "condor. Con el cuerpo del condor alcanza a atraparlo.")]
+    [SerializeField] private float toleranciaAlcance = 0.4f;
+
     [SerializeField] private float limiteIzquierdo = -4f;
     [SerializeField] private float limiteDerecho = 4f;
 
@@ -31,11 +35,14 @@ public class SpawnerObjetos : MonoBehaviour
     private Camera camara;
     private Vector2Int ultimaPantalla;
 
+    private PlayerController jugador;
+
     private const float PlanoJuego = 0f;
 
     void Start()
     {
         camara = Camera.main;
+        jugador = FindFirstObjectByType<PlayerController>();
         CalcularLimites();
         CalcularSiguienteAparicion();
     }
@@ -62,6 +69,13 @@ public class SpawnerObjetos : MonoBehaviour
         }
 
         limiteDerecho = Mathf.Max(0f, mitadAncho - radioObjeto);
+
+        if (jugador != null && jugador.LimiteDerecho > 0f)
+        {
+
+            limiteDerecho = Mathf.Min(limiteDerecho, jugador.LimiteDerecho + toleranciaAlcance);
+        }
+
         limiteIzquierdo = -limiteDerecho;
     }
 

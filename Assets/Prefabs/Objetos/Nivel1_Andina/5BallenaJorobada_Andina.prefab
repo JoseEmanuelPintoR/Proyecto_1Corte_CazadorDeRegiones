@@ -141,6 +141,7 @@ MonoBehaviour:
   tipoObjeto: 1
   velocidadMaximaPowerUp: 2
   factorGravedadPowerUp: 0.25
+  radioObjeto: 0.5
 --- !u!135 &7092838554986788035
 SphereCollider:
   m_ObjectHideFlags: 0

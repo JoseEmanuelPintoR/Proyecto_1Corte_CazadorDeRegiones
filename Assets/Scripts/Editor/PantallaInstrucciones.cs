@@ -15,6 +15,7 @@ public static class PantallaInstrucciones
     private const string CarpetaEscenas = "Assets/Scenes";
     private const string NombreEscena = "Instrucciones";
     private const string CarpetaMenu = "Assets/UI/PantallaMenu";
+    private const string CarpetaJuego = "Assets/UI/PantallaJuego";
 
     private const int ElementosPorLista = 3;
 
@@ -124,7 +125,7 @@ public static class PantallaInstrucciones
         RectTransform cuadro = UtilesInterfaz.Adoptar(escena, columna, "Cuadro");
         Image imagenCuadro = UtilesInterfaz.PonerImagen(cuadro, cuadroInicial);
 
-        UtilesInterfaz.EnColumna(cuadro, columna, 0, 640f, AnchoInterior, 0f, 430f);
+        UtilesInterfaz.EnColumna(cuadro, columna, 0, 560f, AnchoInterior, 0f, 380f);
 
         TMP_Text textoNivel = UtilesInterfaz.Etiqueta(cuadro, "TextoNivel", "Nivel 1 de 5",
             new Vector2(0.5f, 1f), new Vector2(0f, -68f), new Vector2(600f, 70f),
@@ -175,10 +176,12 @@ public static class PantallaInstrucciones
 
         Poder(escena, columna);
 
-        UtilesInterfaz.Espaciador(escena, columna, "Aire", 3, 0.3f);
+        Controles(escena, columna, controlador, out Image iconoControl, out TMP_Text textoControl);
+
+        UtilesInterfaz.Espaciador(escena, columna, "Aire", 4, 0.3f);
 
         RectTransform fila = UtilesInterfaz.Adoptar(escena, columna, "Botones");
-        UtilesInterfaz.EnColumna(fila, columna, 4, 130f, AnchoInterior, 0f, AltoBotonPie);
+        UtilesInterfaz.EnColumna(fila, columna, 5, 130f, AnchoInterior, 0f, AltoBotonPie);
 
         Button menu = Boton(escena, fila, "BotonMenu", UtilesInterfaz.CargarSprite(RutaArte(0, "BotonMenu")),
             new Vector2(0.24f, 0.5f), Vector2.zero, AltoBotonPie, "Menu", 46f, out Image imagenMenu);
@@ -201,6 +204,11 @@ public static class PantallaInstrucciones
         serializado.FindProperty("imagenFlechaRegresar").objectReferenceValue = imagenRegresar;
         serializado.FindProperty("imagenFlechaAnterior").objectReferenceValue = imagenAnterior;
         serializado.FindProperty("imagenFlechaSiguiente").objectReferenceValue = imagenSiguiente;
+        serializado.FindProperty("iconoControl").objectReferenceValue = iconoControl;
+        serializado.FindProperty("textoControl").objectReferenceValue = textoControl;
+        serializado.FindProperty("dibujoJoystick").objectReferenceValue = DibujoJoystick();
+        serializado.FindProperty("dibujoBotones").objectReferenceValue =
+            UtilesInterfaz.CargarSprite($"{CarpetaJuego}/Izquierda.png");
         LlenarArreglo(serializado.FindProperty("iconosRecoge"), iconosRecoge);
         LlenarArreglo(serializado.FindProperty("textosRecoge"), textosRecoge);
         LlenarArreglo(serializado.FindProperty("iconosEvita"), iconosEvita);
@@ -214,25 +222,74 @@ public static class PantallaInstrucciones
     private static void Poder(Scene escena, Transform columna)
     {
 
-        const float alto = 240f;
+        const float alto = 150f;
 
         RectTransform bloque = UtilesInterfaz.Adoptar(escena, columna, "Poder");
         UtilesInterfaz.EnColumna(bloque, columna, 2, alto, AnchoInterior, 0f, alto);
 
-        Sprite energia = UtilesInterfaz.CargarSprite("Assets/UI/PantallaJuego/Energia.png");
+        Sprite energia = UtilesInterfaz.CargarSprite($"{CarpetaJuego}/Energia.png");
 
         RectTransform rectIcono = UtilesInterfaz.Asegurar(bloque, "Icono");
         UtilesInterfaz.Colocar(rectIcono, new Vector2(0f, 0.5f), new Vector2(62f, 0f),
-            UtilesInterfaz.TamanoPorAlto(energia, 100f));
+            UtilesInterfaz.TamanoPorAlto(energia, 88f));
         UtilesInterfaz.PonerImagen(rectIcono, energia);
 
         TMP_Text texto = UtilesInterfaz.Etiqueta(bloque, "Texto", TextoPoder, new Vector2(0f, 0.5f),
-            new Vector2(430f, 0f), new Vector2(610f, 210f), 40f,
+            new Vector2(430f, 0f), new Vector2(610f, 130f), 38f,
             TextAlignmentOptions.Left, UtilesInterfaz.Tinta);
 
         texto.enableWordWrapping = true;
 
-        texto.fontSizeMin = 34f;
+        texto.fontSizeMin = 30f;
+    }
+
+    private static void Controles(Scene escena, Transform columna, InstruccionesController controlador,
+        out Image iconoControl, out TMP_Text textoControl)
+    {
+
+        const float alto = 220f;
+
+        RectTransform bloque = UtilesInterfaz.Adoptar(escena, columna, "Controles");
+        UtilesInterfaz.EnColumna(bloque, columna, 3, alto, AnchoInterior, 0f, alto);
+
+        iconoControl = Control(bloque, "ControlMover", DibujoJoystick(), 0.18f, "Mover");
+
+        Control(bloque, "ControlSaltar", UtilesInterfaz.CargarSprite($"{CarpetaJuego}/Arriba.png"),
+            0.5f, "Saltar");
+
+        Control(bloque, "ControlPoder", UtilesInterfaz.CargarSprite($"{CarpetaJuego}/Energia.png"),
+            0.82f, "Poder");
+
+        Button cambiar = Boton(escena, bloque, "BotonControles",
+            UtilesInterfaz.CargarSprite(RutaArte(0, "BotonMenu")), new Vector2(0.5f, 0f),
+            new Vector2(0f, 52f), 92f, "Control: Botones", 38f, out _);
+
+        UtilesInterfaz.Reconectar(cambiar, controlador, "CambiarControles");
+
+        textoControl = UtilesInterfaz.TextoDeBoton(cambiar);
+    }
+
+    private static Image Control(Transform padre, string nombre, Sprite sprite, float fraccionX, string rotulo)
+    {
+        RectTransform celda = UtilesInterfaz.Asegurar(padre, nombre);
+        UtilesInterfaz.Colocar(celda, new Vector2(fraccionX, 1f), new Vector2(0f, -62f),
+            new Vector2(230f, 124f));
+
+        RectTransform rectIcono = UtilesInterfaz.Asegurar(celda, "Icono");
+        UtilesInterfaz.Colocar(rectIcono, new Vector2(0.5f, 1f), new Vector2(0f, -38f),
+            UtilesInterfaz.TamanoPorAlto(sprite, 68f));
+
+        Image icono = UtilesInterfaz.PonerImagen(rectIcono, sprite);
+
+        UtilesInterfaz.Etiqueta(celda, "Nombre", rotulo, new Vector2(0.5f, 0f), new Vector2(0f, 20f),
+            new Vector2(230f, 44f), 34f, TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
+
+        return icono;
+    }
+
+    private static Sprite DibujoJoystick()
+    {
+        return AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Knob.psd");
     }
 
     private static void AsegurarEventSystem(Scene escena)

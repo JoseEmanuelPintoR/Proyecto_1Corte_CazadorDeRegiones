@@ -16,6 +16,20 @@ public class ObstaculoHojas : MonoBehaviour
         StartCoroutine(CicloHojas());
     }
 
+    void Update()
+    {
+
+        if (panelHojas == null || !panelHojas.activeSelf)
+        {
+            return;
+        }
+
+        if (Time.timeScale == 0f)
+        {
+            panelHojas.SetActive(false);
+        }
+    }
+
     private IEnumerator CicloHojas()
     {
         while (true)

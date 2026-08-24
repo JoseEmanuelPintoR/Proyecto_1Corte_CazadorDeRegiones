@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float velocidad = 5f;
 
     [Header("Salto")]
-    [SerializeField] private float fuerzaSalto = 11f;
+    [SerializeField] private float fuerzaSalto = 9.5f;
 
     [Tooltip("Gravedad extra mientras cae. 1 = gravedad normal; mas alto = cae mas rapido.")]
     [SerializeField] private float multiplicadorCaida = 2.5f;
@@ -21,7 +21,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool limitesDesdeCamara = true;
 
     [Tooltip("Aire que se deja entre el ala del condor y el borde de la pantalla.")]
-    [SerializeField] private float margenBorde = 0.15f;
+    [SerializeField] private float margenBorde = 0.02f;
+
+    [Tooltip("Que parte del dibujo se respeta al calcular el borde. El sprite trae alas y aire " +
+             "transparente, asi que con 1 el condor se queda corto y no alcanza lo que cae en la orilla.")]
+    [Range(0f, 1f)]
+    [SerializeField] private float porcionFigura = 0.55f;
 
     [SerializeField] private float limiteIzquierdo = -4f;
     [SerializeField] private float limiteDerecho = 4f;
@@ -44,6 +49,10 @@ public class PlayerController : MonoBehaviour
     public float MovimientoHorizontal => movimientoHorizontal;
 
     public bool EstaEnSuelo => estaEnSuelo;
+
+    public float LimiteIzquierdo => limiteIzquierdo;
+
+    public float LimiteDerecho => limiteDerecho;
 
     void Awake()
     {
@@ -77,7 +86,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        limiteDerecho = Mathf.Max(0f, mitadAncho - mediaFigura - margenBorde);
+        limiteDerecho = Mathf.Max(0f, mitadAncho - mediaFigura * porcionFigura - margenBorde);
         limiteIzquierdo = -limiteDerecho;
     }
 

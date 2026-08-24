@@ -23,6 +23,12 @@ public class BotonMovimiento : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         Avisar(false);
     }
 
+    void OnDisable()
+    {
+
+        Avisar(false);
+    }
+
     private void Avisar(bool presionado)
     {
         if (jugador == null)

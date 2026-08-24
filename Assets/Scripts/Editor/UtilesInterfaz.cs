@@ -61,7 +61,19 @@ public static class UtilesInterfaz
     public static RectTransform Columna(Scene escena, Transform padre, string nombre, float espaciado,
         int rellenoArriba, int rellenoAbajo, int rellenoLados = 40)
     {
-        RectTransform rect = Adoptar(escena, padre, nombre);
+        return Armar(Adoptar(escena, padre, nombre), espaciado, rellenoArriba, rellenoAbajo, rellenoLados);
+    }
+
+    public static RectTransform ColumnaEn(Transform padre, string nombre, float espaciado,
+        int rellenoArriba, int rellenoAbajo, int rellenoLados = 40)
+    {
+
+        return Armar(Asegurar(padre, nombre), espaciado, rellenoArriba, rellenoAbajo, rellenoLados);
+    }
+
+    private static RectTransform Armar(RectTransform rect, float espaciado,
+        int rellenoArriba, int rellenoAbajo, int rellenoLados)
+    {
         Estirar(rect);
 
         VerticalLayoutGroup grupo = Componente<VerticalLayoutGroup>(rect.gameObject);
@@ -156,7 +168,17 @@ public static class UtilesInterfaz
 
     public static RectTransform Espaciador(Scene escena, Transform columna, string nombre, int orden, float peso)
     {
-        RectTransform rect = Adoptar(escena, columna, nombre);
+        return Flexible(Adoptar(escena, columna, nombre), orden, peso);
+    }
+
+    public static RectTransform EspaciadorEn(Transform columna, string nombre, int orden, float peso)
+    {
+
+        return Flexible(Asegurar(columna, nombre), orden, peso);
+    }
+
+    private static RectTransform Flexible(RectTransform rect, int orden, float peso)
+    {
         rect.SetSiblingIndex(orden);
 
         LayoutElement elemento = Componente<LayoutElement>(rect.gameObject);

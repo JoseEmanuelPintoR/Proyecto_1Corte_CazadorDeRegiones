@@ -58,10 +58,18 @@ public class InstruccionesController : MonoBehaviour
     [SerializeField] private Image[] iconosEvita;
     [SerializeField] private TMP_Text[] textosEvita;
 
+    [Header("Controles")]
+    [SerializeField] private Image iconoControl;
+    [SerializeField] private TMP_Text textoControl;
+    [SerializeField] private Sprite dibujoJoystick;
+    [SerializeField] private Sprite dibujoBotones;
+
     private int indice;
 
     void Start()
     {
+        MostrarControles();
+
         if (regiones == null || regiones.Length == 0)
         {
             Debug.LogWarning("Instrucciones sin regiones configuradas.");
@@ -153,6 +161,24 @@ public class InstruccionesController : MonoBehaviour
                 textos[i].text = hay ? nombres[i] : "";
             }
         }
+    }
+
+    public void CambiarControles()
+    {
+        SelectorControles.Alternar();
+        MostrarControles();
+    }
+
+    private void MostrarControles()
+    {
+        bool conJoystick = SelectorControles.ControlGuardado == SelectorControles.Joystick;
+
+        if (textoControl != null)
+        {
+            textoControl.text = conJoystick ? "Control: Joystick" : "Control: Botones";
+        }
+
+        Poner(iconoControl, conJoystick ? dibujoJoystick : dibujoBotones);
     }
 
     public void Empezar()
