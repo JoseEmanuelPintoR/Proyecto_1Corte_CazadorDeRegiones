@@ -4,20 +4,20 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class FondoEscenario : MonoBehaviour
 {
-    [Header("Camara")]
-    [Tooltip("Si se deja vacio se usa Camera.main.")]
+    [Header("Cámara")]
+    [Tooltip("Si se deja vacío se usa Camera.main.")]
     public Camera camaraObjetivo;
 
-    [Tooltip("Profundidad del fondo desde la camara. El Piso llega hasta z=10, asi que 22 lo deja bien detras.")]
+    [Tooltip("Profundidad del fondo desde la cámara. El Piso llega hasta z=10, así que 22 lo deja bien detrás.")]
     public float distancia = 22f;
 
     [Header("Encuadre")]
     [Tooltip("Zoom adicional sobre el ajuste 'cover'. 1 = justo lo necesario para cubrir la pantalla.")]
     public float zoomExtra = 1f;
 
-    [Header("Linea de suelo del arte")]
+    [Header("Línea de suelo del arte")]
     [Tooltip("Altura normalizada del suelo pintado dentro del PNG. 0 = borde inferior, 1 = borde superior. " +
-             "Subirla acerca la camara al suelo; bajarla la aleja.")]
+             "Subirla acerca la cámara al suelo; bajarla la aleja.")]
     [Range(0f, 1f)]
     public float lineaSueloNormalizada = 0.16f;
 

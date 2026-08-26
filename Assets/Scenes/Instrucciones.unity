@@ -230,7 +230,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 105, y: -105}
-  m_SizeDelta: {x: 116.37931, y: 125}
+  m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &49897863
 MonoBehaviour:
@@ -435,7 +435,7 @@ RectTransform:
   m_AnchorMin: {x: 0.25, y: 1}
   m_AnchorMax: {x: 0.25, y: 1}
   m_AnchoredPosition: {x: 0, y: -58}
-  m_SizeDelta: {x: 285.7143, y: 120}
+  m_SizeDelta: {x: 286.08, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &194528253
 CanvasRenderer:
@@ -573,7 +573,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 40
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -745,7 +745,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: 380
   m_PreferredWidth: -1
-  m_PreferredHeight: 560
+  m_PreferredHeight: 510
   m_FlexibleWidth: 0
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
@@ -785,7 +785,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 66, y: -40}
-  m_SizeDelta: {x: 93.10345, y: 100}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &410067134
 MonoBehaviour:
@@ -871,7 +871,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 53c8b2416f265f84db826cc2380f31f5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1b074e93de2cd7c4ba4066b4eb05fcdf, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -946,7 +946,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Region Andina
+  m_text: "Regi\xF3n Andina"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 21140af9633e0d54297e4a0db1b9d8e4, type: 2}
   m_sharedMaterial: {fileID: 7114552949543479361, guid: 21140af9633e0d54297e4a0db1b9d8e4, type: 2}
@@ -1046,7 +1046,7 @@ RectTransform:
   m_GameObject: {fileID: 441124299}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 329045899}
@@ -1054,7 +1054,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -66, y: -40}
-  m_SizeDelta: {x: 93.10345, y: 100}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &441124301
 MonoBehaviour:
@@ -1140,7 +1140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 53c8b2416f265f84db826cc2380f31f5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d097f7113aa1e1e418e9f9a0e04abe8c, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1207,10 +1207,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Recoge 3 elementos correctos para activar el poder.
-
-    Con el poder
-    los objetos caen mas lento.'
+  m_text: "Recoge 3 elementos correctos para activar el poder.\nCon el poder los
+    objetos caen m\xE1s lento."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 21140af9633e0d54297e4a0db1b9d8e4, type: 2}
   m_sharedMaterial: {fileID: 7114552949543479361, guid: 21140af9633e0d54297e4a0db1b9d8e4, type: 2}
@@ -1567,6 +1565,108 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 721108192}
   m_CullTransparentMesh: 1
+--- !u!1 &725108856
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 725108857}
+  - component: {fileID: 725108858}
+  m_Layer: 0
+  m_Name: Placa
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &725108857
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725108856}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1414484349}
+  m_Father: {fileID: 1867474206}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &725108858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725108856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.AspectRatioFitter
+  m_AspectMode: 3
+  m_AspectRatio: 3.037736
+--- !u!1 &782524023
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 782524024}
+  - component: {fileID: 782524025}
+  m_Layer: 0
+  m_Name: Placa
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &782524024
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782524023}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1993757195}
+  m_Father: {fileID: 1242092718}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &782524025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782524023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.AspectRatioFitter
+  m_AspectMode: 3
+  m_AspectRatio: 3.037736
 --- !u!1 &790962915
 GameObject:
   m_ObjectHideFlags: 0
@@ -1942,7 +2042,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 40
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -2145,6 +2245,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 965820451}
   m_CullTransparentMesh: 1
+--- !u!1 &973480037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 973480038}
+  - component: {fileID: 973480039}
+  m_Layer: 0
+  m_Name: Placa
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &973480038
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973480037}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1667022514}
+  m_Father: {fileID: 2108491161}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &973480039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973480037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.AspectRatioFitter
+  m_AspectMode: 3
+  m_AspectRatio: 3.037736
 --- !u!1 &997535206
 GameObject:
   m_ObjectHideFlags: 0
@@ -2418,7 +2569,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InstruccionesController
   regiones:
   - clave: Andina
-    nombreMostrado: Region Andina
+    nombreMostrado: "Regi\xF3n Andina"
     escenaNivel: Nivel1_Andina
     fondo: {fileID: 21300000, guid: 3d6ed70291f38c2419611c905fa418f1, type: 3}
     cuadro: {fileID: 21300000, guid: bf01fcda457d1c54fac1c78345f15806, type: 3}
@@ -2428,13 +2579,15 @@ MonoBehaviour:
     botonMenu: {fileID: 21300000, guid: dbfc60f043003bd4db7f6696918761b9, type: 3}
     botonEmpezar: {fileID: 21300000, guid: fc72fee3f9126a84aa4be3450b707b39, type: 3}
     flecha: {fileID: 21300000, guid: 53c8b2416f265f84db826cc2380f31f5, type: 3}
+    flechaAnterior: {fileID: 21300000, guid: 1b074e93de2cd7c4ba4066b4eb05fcdf, type: 3}
+    flechaSiguiente: {fileID: 21300000, guid: d097f7113aa1e1e418e9f9a0e04abe8c, type: 3}
     iconosRecoge:
     - {fileID: 21300000, guid: 6949d976b0fa5db4cae29c0be4310dec, type: 3}
     - {fileID: 21300000, guid: 791b744788540d74b9723aa56d83d22e, type: 3}
     - {fileID: 21300000, guid: a8fe6f25eaff3b74faa409d2c89b7df3, type: 3}
     nombresRecoge:
-    - Cafe
-    - Sombrero aguadeno
+    - "Caf\xE9"
+    - "Sombrero aguade\xF1o"
     - Tiple
     iconosEvita:
     - {fileID: 21300000, guid: 366584a9a9607e34782bc82ef7ecd244, type: 3}
@@ -2445,7 +2598,7 @@ MonoBehaviour:
     - Ballena jorobada
     - Anaconda verde
   - clave: Caribe
-    nombreMostrado: Region Caribe
+    nombreMostrado: "Regi\xF3n Caribe"
     escenaNivel: Nivel2_Caribe
     fondo: {fileID: 21300000, guid: 7c0070a9eb4af9a489995f29aceb1f0c, type: 3}
     cuadro: {fileID: 21300000, guid: 7da6449a927a1184899e35b9f92d898e, type: 3}
@@ -2455,6 +2608,8 @@ MonoBehaviour:
     botonMenu: {fileID: 21300000, guid: 8694943e87dd36647baf817a8ce0e9af, type: 3}
     botonEmpezar: {fileID: 21300000, guid: ce40e8eda04ee8847b815af0eeba515a, type: 3}
     flecha: {fileID: 21300000, guid: d4e600529777409498aa4612b4f90d36, type: 3}
+    flechaAnterior: {fileID: 21300000, guid: 4d720ab6877c87848895686aa4f1d248, type: 3}
+    flechaSiguiente: {fileID: 21300000, guid: dc08695a6def3ca4db8f3d7708aa2012, type: 3}
     iconosRecoge:
     - {fileID: 21300000, guid: 366584a9a9607e34782bc82ef7ecd244, type: 3}
     - {fileID: 21300000, guid: 3445670282fe70f4383b8046b6f1098c, type: 3}
@@ -2468,11 +2623,11 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 745b54db8b7f15e45be5c6e9f6079966, type: 3}
     - {fileID: 21300000, guid: ff102416dd962244088e1e3f52d1a2b5, type: 3}
     nombresEvita:
-    - Cafe
+    - "Caf\xE9"
     - Arpa llanera
     - Maloca
   - clave: Pacifica
-    nombreMostrado: Region Pacifica
+    nombreMostrado: "Regi\xF3n Pac\xEDfica"
     escenaNivel: Nivel3_Pacifica
     fondo: {fileID: 21300000, guid: 65cdff9b1046ad941958e49278eeea05, type: 3}
     cuadro: {fileID: 21300000, guid: ea0a39fa68f02a64d8540909946ed594, type: 3}
@@ -2482,6 +2637,8 @@ MonoBehaviour:
     botonMenu: {fileID: 21300000, guid: c611596e79bc0e946bef1a82455e4e49, type: 3}
     botonEmpezar: {fileID: 21300000, guid: c84a218d3923cdf4798d67643cb07bac, type: 3}
     flecha: {fileID: 21300000, guid: 47b3d838c0ac7f7459d30d363effe39f, type: 3}
+    flechaAnterior: {fileID: 21300000, guid: 5dc8a475f4c320443a72bcefbb9bde49, type: 3}
+    flechaSiguiente: {fileID: 21300000, guid: 5059e4795c44a7f4887cd7ee89df9ce1, type: 3}
     iconosRecoge:
     - {fileID: 21300000, guid: f51c4691e56d1424da17fc8a6ca5eeb8, type: 3}
     - {fileID: 21300000, guid: a48d9719eb5f876478072d2996341acb, type: 3}
@@ -2495,11 +2652,11 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 3445670282fe70f4383b8046b6f1098c, type: 3}
     - {fileID: 21300000, guid: c369017edc2ebd84cade4deefbe22456, type: 3}
     nombresEvita:
-    - Sombrero aguadeno
+    - "Sombrero aguade\xF1o"
     - Tambor alegre
     - Caballo criollo
   - clave: Orinoquia
-    nombreMostrado: Region Orinoquia
+    nombreMostrado: "Regi\xF3n Orinoqu\xEDa"
     escenaNivel: Nivel4_Orinoquia
     fondo: {fileID: 21300000, guid: 2fe30e12e6481c54e8e03f3c30852e35, type: 3}
     cuadro: {fileID: 21300000, guid: 055697f13fb10f04d8fc5613b3f9d238, type: 3}
@@ -2509,6 +2666,8 @@ MonoBehaviour:
     botonMenu: {fileID: 21300000, guid: 63f0c3f1237415a44b1ad693b837d592, type: 3}
     botonEmpezar: {fileID: 21300000, guid: dc5a49a8bf8164e4a8582367ff4b00b9, type: 3}
     flecha: {fileID: 21300000, guid: 251f5a52eaaf1f146850ed33b18082b1, type: 3}
+    flechaAnterior: {fileID: 21300000, guid: 0cc4395223519f2409ed7be2ec45c776, type: 3}
+    flechaSiguiente: {fileID: 21300000, guid: 07c298e7150fb00478434ff93fb41ffd, type: 3}
     iconosRecoge:
     - {fileID: 21300000, guid: 745b54db8b7f15e45be5c6e9f6079966, type: 3}
     - {fileID: 21300000, guid: 132262f043d048441821916ae8a6779f, type: 3}
@@ -2526,7 +2685,7 @@ MonoBehaviour:
     - Chontaduro
     - Rana dardo venenosa
   - clave: Amazonia
-    nombreMostrado: Region Amazonia
+    nombreMostrado: "Regi\xF3n Amazon\xEDa"
     escenaNivel: Nivel5_Amazonia
     fondo: {fileID: 21300000, guid: b9844f8a1e04e544cb16b47c9530d7a7, type: 3}
     cuadro: {fileID: 21300000, guid: bcfc548398bd0bd4e8179f3c5550740a, type: 3}
@@ -2536,6 +2695,8 @@ MonoBehaviour:
     botonMenu: {fileID: 21300000, guid: 1c3eddd5192327147a8add096120fdb2, type: 3}
     botonEmpezar: {fileID: 21300000, guid: 0af65eff63398324aa418b842193890b, type: 3}
     flecha: {fileID: 21300000, guid: 71ca018cab96fa9488aae8f10f55a5fb, type: 3}
+    flechaAnterior: {fileID: 21300000, guid: 8949aebaeffdc864a93caa34bce7c531, type: 3}
+    flechaSiguiente: {fileID: 21300000, guid: ae21c7a934fc6a744bf213f6b5187212, type: 3}
     iconosRecoge:
     - {fileID: 21300000, guid: 5780b5c235b17624a8aea39f750c0c57, type: 3}
     - {fileID: 21300000, guid: b401d74946380e440a9a7c0f1f4b7bd0, type: 3}
@@ -2697,7 +2858,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 40
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -2852,12 +3013,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1993757195}
+  - {fileID: 782524024}
   m_Father: {fileID: 2012027573}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 52}
+  m_AnchoredPosition: {x: 0, y: 34}
   m_SizeDelta: {x: 279.4717, y: 92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1242092719
@@ -3052,7 +3213,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 40
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -3126,7 +3287,7 @@ RectTransform:
   m_AnchorMin: {x: 0.75, y: 1}
   m_AnchorMax: {x: 0.75, y: 1}
   m_AnchoredPosition: {x: 0, y: -58}
-  m_SizeDelta: {x: 252.63158, y: 120}
+  m_SizeDelta: {x: 286.08, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1281990076
 CanvasRenderer:
@@ -3595,10 +3756,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1867474206}
+  m_Father: {fileID: 725108857}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0.1509434}
+  m_AnchorMax: {x: 0.9503106, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3622,7 +3783,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Menu
+  m_text: "Men\xFA"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
   m_sharedMaterial: {fileID: -3535178621440749287, guid: 7e1fa21571f217f49844369f9eda3c3f, type: 2}
@@ -3800,7 +3961,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 40
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -4169,10 +4330,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2108491161}
+  m_Father: {fileID: 973480038}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0.1509434}
+  m_AnchorMax: {x: 0.9503106, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4439,7 +4600,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
   m_fontSizeMax: 40
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -4670,7 +4831,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1414484349}
+  - {fileID: 725108857}
   m_Father: {fileID: 1486289923}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.24, y: 0.5}
@@ -5107,10 +5268,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1242092718}
+  m_Father: {fileID: 782524024}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0.1509434}
+  m_AnchorMax: {x: 0.9503106, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5168,9 +5329,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
   m_IgnoreLayout: 0
   m_MinWidth: -1
-  m_MinHeight: 220
+  m_MinHeight: 270
   m_PreferredWidth: -1
-  m_PreferredHeight: 220
+  m_PreferredHeight: 270
   m_FlexibleWidth: 0
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
@@ -5392,7 +5553,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1667022514}
+  - {fileID: 973480038}
   m_Father: {fileID: 1486289923}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.76, y: 0.5}

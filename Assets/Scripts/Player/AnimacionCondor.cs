@@ -11,7 +11,7 @@ public class AnimacionCondor : MonoBehaviour
     [Tooltip("Marcado si el dibujo de perfil mira hacia la izquierda (es el caso de CondorLado).")]
     [SerializeField] private bool arteMiraIzquierda = true;
 
-    [Header("Accesorio elegido en Personalizacion")]
+    [Header("Accesorio elegido en Personalización")]
     [Tooltip("Vistas base sin accesorio; son las que el Animator pone en cada clip.")]
     [SerializeField] private Sprite spriteFrente;
     [SerializeField] private Sprite spriteLado;

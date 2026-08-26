@@ -3,14 +3,14 @@ using System.Collections;
 
 public class RafagaHorizontal : MonoBehaviour
 {
-    [Header("Rafaga")]
+    [Header("Ráfaga")]
     [SerializeField] private float velocidadRafaga = 2.5f;
 
-    [Header("Tiempo entre rafagas")]
+    [Header("Tiempo entre ráfagas")]
     [SerializeField] private float tiempoMinimo = 0.6f;
     [SerializeField] private float tiempoMaximo = 1.2f;
 
-    [Header("Duracion de la rafaga")]
+    [Header("Duración de la ráfaga")]
     [SerializeField] private float duracionRafaga = 0.35f;
 
     private Rigidbody rb;

@@ -22,6 +22,8 @@ public class InstruccionesController : MonoBehaviour
         public Sprite botonMenu;
         public Sprite botonEmpezar;
         public Sprite flecha;
+        public Sprite flechaAnterior;
+        public Sprite flechaSiguiente;
 
         public Sprite[] iconosRecoge;
         public string[] nombresRecoge;
@@ -40,7 +42,7 @@ public class InstruccionesController : MonoBehaviour
     [SerializeField] private TMP_Text textoNivel;
     [SerializeField] private TMP_Text textoRegion;
 
-    [Header("Arte que tambien cambia por region")]
+    [Header("Arte que también cambia por región")]
     [SerializeField] private Image imagenRecoge;
     [SerializeField] private Image imagenEvita;
     [SerializeField] private Image imagenLinea;
@@ -115,8 +117,8 @@ public class InstruccionesController : MonoBehaviour
         Poner(imagenBotonEmpezar, region.botonEmpezar);
 
         Poner(imagenFlechaRegresar, region.flecha);
-        Poner(imagenFlechaAnterior, region.flecha);
-        Poner(imagenFlechaSiguiente, region.flecha);
+        Poner(imagenFlechaAnterior, region.flechaAnterior);
+        Poner(imagenFlechaSiguiente, region.flechaSiguiente);
 
         if (textoNivel != null)
         {

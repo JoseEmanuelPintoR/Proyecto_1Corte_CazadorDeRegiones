@@ -8,26 +8,26 @@ public class SpawnerObjetos : MonoBehaviour
     [Header("Objetos incorrectos")]
     [SerializeField] private GameObject[] objetosIncorrectos;
 
-    [Header("Tiempo de aparicion")]
+    [Header("Tiempo de aparición")]
     [SerializeField] private float tiempoMinimo = 1f;
     [SerializeField] private float tiempoMaximo = 2f;
 
-    [Header("Limites horizontales")]
-    [Tooltip("Calcula los limites con lo que la camara ve de verdad, para que ningun objeto " +
+    [Header("Límites horizontales")]
+    [Tooltip("Calcula los límites con lo que la cámara ve de verdad, para que ningún objeto " +
              "caiga fuera de la pantalla. Al desmarcarlo se usan los valores fijos de abajo.")]
     [SerializeField] private bool limitesDesdeCamara = true;
 
     [Tooltip("Radio del objeto que cae, para que no quede medio afuera al borde.")]
     [SerializeField] private float radioObjeto = 0.5f;
 
-    [Tooltip("Cuanto se permite que un objeto caiga mas afuera de donde llega el centro del " +
-             "condor. Con el cuerpo del condor alcanza a atraparlo.")]
+    [Tooltip("Cuánto se permite que un objeto caiga más afuera de donde llega el centro del " +
+             "cóndor. Con el cuerpo del cóndor alcanza a atraparlo.")]
     [SerializeField] private float toleranciaAlcance = 0.4f;
 
     [SerializeField] private float limiteIzquierdo = -4f;
     [SerializeField] private float limiteDerecho = 4f;
 
-    [Header("Cantidad simultanea")]
+    [Header("Cantidad simultánea")]
     [SerializeField] private bool permitirMultiples = false;
 
     private float tiempoSiguiente;

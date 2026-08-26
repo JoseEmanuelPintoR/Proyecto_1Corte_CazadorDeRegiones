@@ -22,11 +22,11 @@ public class PersonalizacionController : MonoBehaviour
     [SerializeField] private Button botonSombreroLlanero;
     [SerializeField] private Button botonPlumas;
 
-    [Header("Colores de seleccion")]
+    [Header("Colores de selección")]
     [SerializeField] private Color colorNormal = Color.white;
     [SerializeField] private Color colorSeleccionado = Color.yellow;
 
-    [Header("Vista previa del condor")]
+    [Header("Vista previa del cóndor")]
     [SerializeField] private Image vistaPrevia;
     [SerializeField] private AccesorioCondor[] accesorios;
 

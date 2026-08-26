@@ -25,7 +25,7 @@ public static class PantallaInstrucciones
 
     private const string TextoPoder =
         "Recoge 3 elementos correctos para activar el poder.\n" +
-        "Con el poder los objetos caen mas lento.";
+        "Con el poder los objetos caen más lento.";
 
     private class Arte
     {
@@ -36,11 +36,11 @@ public static class PantallaInstrucciones
 
     private static readonly Arte[] ArtePorRegion =
     {
-        new Arte { carpeta = "PANTALLA-INSTRUCCIONES-ANDINA",    cuadro = "CuadroAndina",    nombreMostrado = "Region Andina"    },
-        new Arte { carpeta = "PANTALLA-INSTRUCCIONES-CARIBE",    cuadro = "CuadroCaribe",    nombreMostrado = "Region Caribe"    },
-        new Arte { carpeta = "PANTALLA-INSTRUCCIONES-PACIFICO",  cuadro = "CuadroPacifico",  nombreMostrado = "Region Pacifica"  },
-        new Arte { carpeta = "PANTALLA-INSTRUCCIONES-ORINOQUIA", cuadro = "CuadroOrinoquia", nombreMostrado = "Region Orinoquia" },
-        new Arte { carpeta = "PANTALLA-INSTRUCCIONES-AMAZONIA",  cuadro = "CuadroAmazonia",  nombreMostrado = "Region Amazonia"  },
+        new Arte { carpeta = "PANTALLA-INSTRUCCIONES-ANDINA",    cuadro = "CuadroAndina",    nombreMostrado = "Región Andina"    },
+        new Arte { carpeta = "PANTALLA-INSTRUCCIONES-CARIBE",    cuadro = "CuadroCaribe",    nombreMostrado = "Región Caribe"    },
+        new Arte { carpeta = "PANTALLA-INSTRUCCIONES-PACIFICO",  cuadro = "CuadroPacifico",  nombreMostrado = "Región Pacífica"  },
+        new Arte { carpeta = "PANTALLA-INSTRUCCIONES-ORINOQUIA", cuadro = "CuadroOrinoquia", nombreMostrado = "Región Orinoquía" },
+        new Arte { carpeta = "PANTALLA-INSTRUCCIONES-AMAZONIA",  cuadro = "CuadroAmazonia",  nombreMostrado = "Región Amazonía"  },
     };
 
     [MenuItem("Herramientas/Cazador de Regiones/9 · Construir pantalla de instrucciones", false, 108)]
@@ -125,24 +125,24 @@ public static class PantallaInstrucciones
         RectTransform cuadro = UtilesInterfaz.Adoptar(escena, columna, "Cuadro");
         Image imagenCuadro = UtilesInterfaz.PonerImagen(cuadro, cuadroInicial);
 
-        UtilesInterfaz.EnColumna(cuadro, columna, 0, 560f, AnchoInterior, 0f, 380f);
+        UtilesInterfaz.EnColumna(cuadro, columna, 0, 510f, AnchoInterior, 0f, 380f);
 
         TMP_Text textoNivel = UtilesInterfaz.Etiqueta(cuadro, "TextoNivel", "Nivel 1 de 5",
             new Vector2(0.5f, 1f), new Vector2(0f, -68f), new Vector2(600f, 70f),
             46f, TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
 
-        TMP_Text textoRegion = UtilesInterfaz.Etiqueta(cuadro, "TextoRegion", "Region Andina",
+        TMP_Text textoRegion = UtilesInterfaz.Etiqueta(cuadro, "TextoRegion", "Región Andina",
             new Vector2(0.5f, 1f), new Vector2(0f, -150f), new Vector2(600f, 96f),
             62f, TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
 
-        Button anterior = Boton(escena, cuadro, "BotonAnterior", flecha, new Vector2(0f, 0.5f),
-            new Vector2(66f, -40f), 100f, null, 0f, out Image imagenAnterior);
+        Button anterior = Boton(escena, cuadro, "BotonAnterior", ArteDe(0, "FlechaAnterior"),
+            new Vector2(0f, 0.5f), new Vector2(66f, -40f), 100f, null, 0f, out Image imagenAnterior);
         UtilesInterfaz.Reconectar(anterior, controlador, "Anterior");
 
-        Button siguiente = Boton(escena, cuadro, "BotonSiguiente", flecha, new Vector2(1f, 0.5f),
-            new Vector2(-66f, -40f), 100f, null, 0f, out Image imagenSiguiente);
+        Button siguiente = Boton(escena, cuadro, "BotonSiguiente", ArteDe(0, "FlechaSiguiente"),
+            new Vector2(1f, 0.5f), new Vector2(-66f, -40f), 100f, null, 0f, out Image imagenSiguiente);
         UtilesInterfaz.Reconectar(siguiente, controlador, "Siguiente");
-        siguiente.transform.localScale = new Vector3(-1f, 1f, 1f);
+        siguiente.transform.localScale = Vector3.one;
 
         RectTransform listas = UtilesInterfaz.Adoptar(escena, columna, "Listas");
         float altoListas = 140f + ElementosPorLista * 118f;
@@ -184,7 +184,7 @@ public static class PantallaInstrucciones
         UtilesInterfaz.EnColumna(fila, columna, 5, 130f, AnchoInterior, 0f, AltoBotonPie);
 
         Button menu = Boton(escena, fila, "BotonMenu", UtilesInterfaz.CargarSprite(RutaArte(0, "BotonMenu")),
-            new Vector2(0.24f, 0.5f), Vector2.zero, AltoBotonPie, "Menu", 46f, out Image imagenMenu);
+            new Vector2(0.24f, 0.5f), Vector2.zero, AltoBotonPie, "Menú", 46f, out Image imagenMenu);
         UtilesInterfaz.Reconectar(menu, controlador, "VolverMenu");
 
         Button empezar = Boton(escena, fila, "BotonEmpezar", UtilesInterfaz.CargarSprite(RutaArte(0, "BotonEmpezar")),
@@ -215,7 +215,7 @@ public static class PantallaInstrucciones
         LlenarArreglo(serializado.FindProperty("textosEvita"), textosEvita);
         serializado.ApplyModifiedProperties();
 
-        log.AppendLine("  Pantalla montada: mapa, flechas, 3+3 elementos, Menu y Empezar");
+        log.AppendLine("  Pantalla montada: mapa, flechas, 3+3 elementos, Menú y Empezar");
         return controlador;
     }
 
@@ -247,7 +247,7 @@ public static class PantallaInstrucciones
         out Image iconoControl, out TMP_Text textoControl)
     {
 
-        const float alto = 220f;
+        const float alto = 270f;
 
         RectTransform bloque = UtilesInterfaz.Adoptar(escena, columna, "Controles");
         UtilesInterfaz.EnColumna(bloque, columna, 3, alto, AnchoInterior, 0f, alto);
@@ -262,7 +262,7 @@ public static class PantallaInstrucciones
 
         Button cambiar = Boton(escena, bloque, "BotonControles",
             UtilesInterfaz.CargarSprite(RutaArte(0, "BotonMenu")), new Vector2(0.5f, 0f),
-            new Vector2(0f, 52f), 92f, "Control: Botones", 38f, out _);
+            new Vector2(0f, 34f), 92f, "Control: Botones", 38f, out _);
 
         UtilesInterfaz.Reconectar(cambiar, controlador, "CambiarControles");
 
@@ -328,6 +328,8 @@ public static class PantallaInstrucciones
 
         texto = UtilesInterfaz.Etiqueta(fila, "Nombre", "", new Vector2(0f, 0.5f),
             new Vector2(240f, 0f), new Vector2(260f, 92f), 40f, TextAlignmentOptions.Left, UtilesInterfaz.Tinta);
+
+        texto.fontStyle = FontStyles.Bold;
     }
 
     private static Button Boton(Scene escena, Transform padre, string nombre, Sprite sprite, Vector2 ancla,
@@ -342,9 +344,7 @@ public static class PantallaInstrucciones
 
         if (etiqueta != null)
         {
-            RectTransform rectTexto = UtilesInterfaz.Asegurar(rect, "Texto");
-            UtilesInterfaz.Estirar(rectTexto);
-            UtilesInterfaz.PonerTexto(rectTexto, etiqueta, tamanoLetra, TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
+            UtilesInterfaz.TextoCentrado(boton, sprite, etiqueta, tamanoLetra, UtilesInterfaz.Tinta);
         }
 
         return boton;
@@ -402,6 +402,8 @@ public static class PantallaInstrucciones
             region.FindPropertyRelative("botonMenu").objectReferenceValue = ArteDe(i, "BotonMenu");
             region.FindPropertyRelative("botonEmpezar").objectReferenceValue = ArteDe(i, "BotonEmpezar");
             region.FindPropertyRelative("flecha").objectReferenceValue = ArteDe(i, "FlechaRegresar");
+            region.FindPropertyRelative("flechaAnterior").objectReferenceValue = ArteDe(i, "FlechaAnterior");
+            region.FindPropertyRelative("flechaSiguiente").objectReferenceValue = ArteDe(i, "FlechaSiguiente");
 
             Rellenar(region, "iconosRecoge", "nombresRecoge", nivel.elementos, 0);
             Rellenar(region, "iconosEvita", "nombresEvita", nivel.elementos, ElementosPorLista);
@@ -464,6 +466,6 @@ public static class PantallaInstrucciones
         escenas.Add(new EditorBuildSettingsScene(ruta, true));
         EditorBuildSettings.scenes = escenas.ToArray();
 
-        log.AppendLine($"  Build Settings: agregada en el indice {escenas.Count - 1}");
+        log.AppendLine($"  Build Settings: agregada en el índice {escenas.Count - 1}");
     }
 }

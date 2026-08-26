@@ -9,22 +9,22 @@ public class PlayerController : MonoBehaviour
     [Header("Salto")]
     [SerializeField] private float fuerzaSalto = 9.5f;
 
-    [Tooltip("Gravedad extra mientras cae. 1 = gravedad normal; mas alto = cae mas rapido.")]
+    [Tooltip("Gravedad extra mientras cae. 1 = gravedad normal; más alto = cae más rápido.")]
     [SerializeField] private float multiplicadorCaida = 2.5f;
 
-    [Tooltip("Gravedad extra mientras sube pero ya se solto el boton, para dosificar la altura.")]
+    [Tooltip("Gravedad extra mientras sube pero ya se soltó el botón, para dosificar la altura.")]
     [SerializeField] private float multiplicadorSaltoCorto = 2f;
 
-    [Header("Limites")]
-    [Tooltip("Calcula los limites con lo que la camara ve de verdad. Al desmarcarlo se usan " +
+    [Header("Límites")]
+    [Tooltip("Calcula los límites con lo que la cámara ve de verdad. Al desmarcarlo se usan " +
              "los valores fijos de abajo.")]
     [SerializeField] private bool limitesDesdeCamara = true;
 
-    [Tooltip("Aire que se deja entre el ala del condor y el borde de la pantalla.")]
+    [Tooltip("Aire que se deja entre el ala del cóndor y el borde de la pantalla.")]
     [SerializeField] private float margenBorde = 0.02f;
 
-    [Tooltip("Que parte del dibujo se respeta al calcular el borde. El sprite trae alas y aire " +
-             "transparente, asi que con 1 el condor se queda corto y no alcanza lo que cae en la orilla.")]
+    [Tooltip("Qué parte del dibujo se respeta al calcular el borde. El sprite trae alas y aire " +
+             "transparente, así que con 1 el cóndor se queda corto y no alcanza lo que cae en la orilla.")]
     [Range(0f, 1f)]
     [SerializeField] private float porcionFigura = 0.55f;
 

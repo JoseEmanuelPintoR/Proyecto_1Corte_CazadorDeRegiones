@@ -5,9 +5,9 @@ using UnityEngine;
 
 public static class IconoAplicacion
 {
-    private const string RutaPortada = "Assets/UI/PortadaAPK.png";
+    private const string RutaPortada = "Assets/UI/IconoAPK.png";
 
-    private const string NombreJuego = "Cazador de Regiones";
+    private const string NombreJuego = "Cazadores de Regiones";
 
     private const string IdentificadorAndroid = "com.cazadorderegiones.juego";
 
@@ -65,7 +65,7 @@ public static class IconoAplicacion
 
         if (importador == null)
         {
-            log.AppendLine($"[aviso] No se encontro {RutaPortada}; el icono queda sin cambiar");
+            log.AppendLine($"[aviso] No se encontró {RutaPortada}; el icono queda sin cambiar");
             return null;
         }
 
@@ -76,7 +76,7 @@ public static class IconoAplicacion
             importador.isReadable = true;
             importador.SaveAndReimport();
 
-            log.AppendLine("  PortadaAPK reimportada como textura legible");
+            log.AppendLine("  IconoAPK reimportado como textura legible");
         }
 
         Texture2D portada = AssetDatabase.LoadAssetAtPath<Texture2D>(RutaPortada);
@@ -96,14 +96,21 @@ public static class IconoAplicacion
         {
             PlatformIcon[] iconos = PlayerSettings.GetPlatformIcons(NamedBuildTarget.Android, tipo);
 
+            bool adaptativo = tipo.ToString() == "Adaptive";
+
             foreach (PlatformIcon icono in iconos)
             {
-                icono.SetTextures(Capas(portada, icono.maxLayerCount));
+
+                icono.SetTextures(adaptativo
+                    ? new Texture2D[icono.maxLayerCount]
+                    : Capas(portada, icono.maxLayerCount));
             }
 
             PlayerSettings.SetPlatformIcons(NamedBuildTarget.Android, tipo, iconos);
 
-            log.AppendLine($"  Android · {tipo}: {iconos.Length} tamanos con la portada");
+            log.AppendLine(adaptativo
+                ? $"  Android · {tipo}: vaciado (la máscara del launcher se comería la portada)"
+                : $"  Android · {tipo}: {iconos.Length} tamaños con la portada");
         }
     }
 
@@ -132,6 +139,6 @@ public static class IconoAplicacion
 
         PlayerSettings.SetIcons(NamedBuildTarget.Standalone, iconos, IconKind.Application);
 
-        log.AppendLine($"  Escritorio: {iconos.Length} tamanos con la portada");
+        log.AppendLine($"  Escritorio: {iconos.Length} tamaños con la portada");
     }
 }

@@ -9,7 +9,7 @@ public class MedidorPowerUp : MonoBehaviour
     [Header("Llenado")]
     [SerializeField] private float velocidadLlenado = 3f;
 
-    [Header("Luz cuando esta listo")]
+    [Header("Luz cuando está listo")]
     [SerializeField] private float brilloMinimo = 0.3f;
     [SerializeField] private float brilloMaximo = 0.95f;
     [SerializeField] private float velocidadBrillo = 1.6f;

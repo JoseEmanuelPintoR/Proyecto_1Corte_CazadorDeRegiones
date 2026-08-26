@@ -72,15 +72,15 @@ public static class HacerTodo
         }
         catch (System.Exception error)
         {
-            Debug.LogError($"Cazador de Regiones · el armado se corto: {error}");
+            Debug.LogError($"Cazador de Regiones · el armado se cortó: {error}");
         }
     }
 
-    [MenuItem("Herramientas/Cazador de Regiones/Volver a armar en la proxima recompilada", false, 201)]
+    [MenuItem("Herramientas/Cazador de Regiones/Volver a armar en la próxima recompilada", false, 201)]
     public static void Rearmar()
     {
         EditorPrefs.SetBool(ClavePendiente, true);
-        Debug.Log("Cazador de Regiones · quedo armado para la proxima recompilada. " +
+        Debug.Log("Cazador de Regiones · quedó armado para la próxima recompilada. " +
                   "Toca cualquier script (o Assets > Reimport All) para dispararlo.");
     }
 }

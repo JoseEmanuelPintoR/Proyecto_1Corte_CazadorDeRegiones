@@ -44,8 +44,8 @@ public static class ConfigurarEscenarios
 
     private static readonly Dictionary<string, string> NombrePorElemento = new Dictionary<string, string>
     {
-        { "Cafe",             "Cafe"                 },
-        { "SombreroAguadeno", "Sombrero aguadeno"    },
+        { "Cafe",             "Café"                 },
+        { "SombreroAguadeno", "Sombrero aguadeño"    },
         { "Tiple",            "Tiple"                },
         { "SombreroVueltiao", "Sombrero vueltiao"    },
         { "TamborAlegre",     "Tambor alegre"        },
@@ -135,7 +135,7 @@ public static class ConfigurarEscenarios
         Debug.Log(log.ToString());
     }
 
-    [MenuItem("Herramientas/Cazador de Regiones/4 · Poner el condor animado", false, 103)]
+    [MenuItem("Herramientas/Cazador de Regiones/4 · Poner el cóndor animado", false, 103)]
     public static void MenuCondor()
     {
         if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
@@ -336,7 +336,7 @@ public static class ConfigurarEscenarios
         camara.transform.position = new Vector3(posicion.x, nuevaY, posicion.z);
         fondo.Colocar();
 
-        return $"camara y={nuevaY:0.00}";
+        return $"cámara y={nuevaY:0.00}";
     }
 
     private static string ReubicarSpawner(Scene escena, Camera camara)
@@ -421,7 +421,7 @@ public static class ConfigurarEscenarios
             return;
         }
 
-        log.AppendLine("--- 4 · Condor en las escenas ---");
+        log.AppendLine("--- 4 · Cóndor en las escenas ---");
 
         foreach (Nivel nivel in Niveles)
         {
@@ -461,7 +461,7 @@ public static class ConfigurarEscenarios
 
                 if (rutaActual == null)
                 {
-                    log.AppendLine($"[aviso] No se encontro el prefab {indice} en {carpeta}");
+                    log.AppendLine($"[aviso] No se encontró el prefab {indice} en {carpeta}");
                     continue;
                 }
 

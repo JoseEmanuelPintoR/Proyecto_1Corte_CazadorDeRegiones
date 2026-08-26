@@ -57,6 +57,13 @@ public static class BotonesInterfaz
 
     private const float LetraBoton = 44f;
 
+    private const string Eslogan = "\"Descubre la magia de Colombia, región por región\"";
+
+    private const string SpriteHojas = "Assets/UI/PANTALLA-INSTRUCCIONES-AMAZONIA/ColumnaAmazonia.png";
+
+    // El dibujo de hojas ocupa de 1590 a 2750 de los 4500 px de ancho del PNG; el resto es aire.
+    private const float FiloDeLasHojas = 0.353f;
+
     [MenuItem("Herramientas/Cazador de Regiones/7 · Aplicar botones nuevos", false, 106)]
     public static void MenuBotones()
     {
@@ -147,20 +154,7 @@ public static class BotonesInterfaz
         Button boton = UtilesInterfaz.Componente<Button>(rect.gameObject);
         boton.targetGraphic = imagen;
 
-        TMP_Text etiqueta = UtilesInterfaz.TextoDeBoton(boton);
-
-        if (etiqueta != null)
-        {
-            UtilesInterfaz.Estirar(etiqueta.rectTransform);
-
-            if (rotulo != null)
-            {
-                etiqueta.text = rotulo;
-            }
-
-            UtilesInterfaz.Formato(etiqueta, tamanoLetra, TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
-            etiqueta.gameObject.SetActive(true);
-        }
+        UtilesInterfaz.TextoCentrado(boton, sprite, rotulo, tamanoLetra, UtilesInterfaz.Tinta);
 
         return rect;
     }
@@ -202,7 +196,8 @@ public static class BotonesInterfaz
         return rect;
     }
 
-    private static RectTransform Titulo(Scene escena, string nombre, float tamanoLetra, StringBuilder log)
+    private static RectTransform Titulo(Scene escena, string nombre, float tamanoLetra, StringBuilder log,
+        string rotulo = null)
     {
         RectTransform rect = UtilesInterfaz.BuscarRect(escena, nombre);
 
@@ -212,8 +207,14 @@ public static class BotonesInterfaz
             return null;
         }
 
-        UtilesInterfaz.Formato(rect.GetComponent<TMP_Text>(), tamanoLetra,
-            TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
+        TMP_Text texto = rect.GetComponent<TMP_Text>();
+
+        if (texto != null && rotulo != null)
+        {
+            texto.text = rotulo;
+        }
+
+        UtilesInterfaz.Formato(texto, tamanoLetra, TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
 
         return rect;
     }
@@ -240,33 +241,42 @@ public static class BotonesInterfaz
         UtilesInterfaz.PonerImagen(rectLinea, linea);
         UtilesInterfaz.EnColumna(rectLinea, columna, 1, 50f, 600f, 0f);
 
-        UtilesInterfaz.Espaciador(escena, columna, "Aire", 2, 1f);
+        RectTransform rectEslogan = UtilesInterfaz.Adoptar(escena, columna, "Eslogan");
+        TMP_Text eslogan = UtilesInterfaz.PonerTexto(rectEslogan, Eslogan, 40f,
+            TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
+        eslogan.enableWordWrapping = true;
+        eslogan.fontSizeMin = 30f;
+        eslogan.fontStyle = FontStyles.Italic;
+        UtilesInterfaz.EnColumna(rectEslogan, columna, 2, 96f, AnchoInterior, 0f, 80f);
+
+        UtilesInterfaz.Espaciador(escena, columna, "Aire", 3, 1f);
 
         UtilesInterfaz.EnColumna(Boton(escena, "BotonJugar", $"{CarpetaMenu}/BotonJugar.png", 60f, log),
-            columna, 3, 190f, AnchoInterior, 0f, 140f);
-        UtilesInterfaz.EnColumna(Boton(escena, "BotonPersonalizar", $"{CarpetaMenu}/BotonPersonalizar.png", 54f, log),
             columna, 4, 190f, AnchoInterior, 0f, 140f);
-        UtilesInterfaz.EnColumna(Boton(escena, "BotonCreditos", $"{CarpetaMenu}/BotonCreditos.png", 60f, log),
+        UtilesInterfaz.EnColumna(Boton(escena, "BotonPersonalizar", $"{CarpetaMenu}/BotonPersonalizar.png", 54f, log),
             columna, 5, 190f, AnchoInterior, 0f, 140f);
+        UtilesInterfaz.EnColumna(
+            Boton(escena, "BotonCreditos", $"{CarpetaMenu}/BotonCreditos.png", 60f, log, null, "CRÉDITOS"),
+            columna, 6, 190f, AnchoInterior, 0f, 140f);
 
         UtilesInterfaz.EnColumna(
             Boton(escena, "BotonSalir", $"{CarpetaMenu}/BotonCreditos.png", 60f, log,
                 new Color(0.82f, 0.82f, 0.82f)),
-            columna, 6, 190f, AnchoInterior, 0f, 140f);
+            columna, 7, 190f, AnchoInterior, 0f, 140f);
 
-        UtilesInterfaz.Espaciador(escena, columna, "AireAbajo", 7, 1.1f);
+        UtilesInterfaz.Espaciador(escena, columna, "AireAbajo", 8, 1.1f);
 
-        log.AppendLine("  MenuPrincipal: columna elastica con titulo y 4 botones");
+        log.AppendLine("  MenuPrincipal: columna elástica con título, eslogan y 4 botones");
         Guardar(escena);
     }
 
-    private static readonly (string boton, string sprite, int fila)[] Regiones =
+    private static readonly (string boton, string sprite, int fila, string rotulo)[] Regiones =
     {
-        ("BotonAndina",    "ElegirRegionAndina",    0),
-        ("BotonCaribe",    "ElegirRegionCaribe",    0),
-        ("BotonPacifica",  "ElegirRegionPacifica",  1),
-        ("BotonOrinoquia", "ElegirRegionOrinoquia", 1),
-        ("BotonAmazonia",  "ElegirRegionAmazonia",  2),
+        ("BotonAndina",    "ElegirRegionAndina",    0, "REGIÓN ANDINA"),
+        ("BotonCaribe",    "ElegirRegionCaribe",    0, "REGIÓN CARIBE"),
+        ("BotonPacifica",  "ElegirRegionPacifica",  1, "REGIÓN PACÍFICA"),
+        ("BotonOrinoquia", "ElegirRegionOrinoquia", 1, "REGIÓN ORINOQUÍA"),
+        ("BotonAmazonia",  "ElegirRegionAmazonia",  2, "REGIÓN AMAZONÍA"),
     };
 
     private static void SeleccionNiveles(StringBuilder log)
@@ -276,7 +286,8 @@ public static class BotonesInterfaz
 
         RectTransform columna = Armazon(escena, lienzo, $"{CarpetaMenu}/Marco.png", 24f, 190, 110, out RectTransform marco);
 
-        UtilesInterfaz.EnColumna(Titulo(escena, "Titulo", 76f, log), columna, 0, 170f, AnchoInterior, 0f);
+        UtilesInterfaz.EnColumna(Titulo(escena, "Titulo", 76f, log, "SELECCIÓN NIVELES"),
+            columna, 0, 170f, AnchoInterior, 0f);
         UtilesInterfaz.Espaciador(escena, columna, "Aire", 1, 0.5f);
 
         Vector2 celda = new Vector2(370f, 380f);
@@ -289,7 +300,7 @@ public static class BotonesInterfaz
             UtilesInterfaz.EnColumna(filas[f], columna, 2 + f, celda.y, AnchoInterior, 0f, celda.y);
         }
 
-        foreach ((string boton, string sprite, int fila) in Regiones)
+        foreach ((string boton, string sprite, int fila, string rotulo) in Regiones)
         {
             RectTransform rect = UtilesInterfaz.BuscarRect(escena, boton);
 
@@ -317,6 +328,7 @@ public static class BotonesInterfaz
             {
                 UtilesInterfaz.Colocar(etiqueta.rectTransform, new Vector2(0.5f, 0f),
                     new Vector2(0f, 52f), new Vector2(celda.x - 20f, 76f));
+                etiqueta.text = rotulo;
                 UtilesInterfaz.Formato(etiqueta, 40f, TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
                 etiqueta.gameObject.SetActive(true);
             }
@@ -460,7 +472,7 @@ public static class BotonesInterfaz
         },
         new Integrante
         {
-            rol = "Musica y Sonidos", nombre = "YouTube Music", icono = "IconoMusica",
+            rol = "Música y Sonidos", nombre = "YouTube Music", icono = "IconoMusica",
             descripcion = "Toda la música y los efectos de sonido se obtuvieron de esta fuente."
         },
     };
@@ -498,7 +510,7 @@ public static class BotonesInterfaz
 
         RectTransform titulo = UtilesInterfaz.Asegurar(interior, "TituloCreditos");
         UtilesInterfaz.Colocar(titulo, new Vector2(0.5f, 1f), new Vector2(0f, -165f), new Vector2(860f, 150f));
-        UtilesInterfaz.PonerTexto(titulo, "CREDITOS", 96f, TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
+        UtilesInterfaz.PonerTexto(titulo, "CRÉDITOS", 96f, TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
 
         RectTransform zona = UtilesInterfaz.Adoptar(escena, interior, "ZonaMarco");
         UtilesInterfaz.Estirar(zona);
@@ -530,7 +542,7 @@ public static class BotonesInterfaz
         BotonIcono(escena, "BotonVolver", $"{CarpetaCreditos}/FlechaRegresar.png",
             new Vector2(0f, 1f), new Vector2(78f, -68f), 108f, log, interior);
 
-        log.AppendLine($"  Creditos: titulo fuera del pergamino, {Integrantes.Length} entradas y el condor abajo");
+        log.AppendLine($"  Creditos: título fuera del pergamino, {Integrantes.Length} entradas y el cóndor abajo");
         Guardar(escena);
     }
 
@@ -686,7 +698,7 @@ public static class BotonesInterfaz
         serializado.FindProperty("porcionFigura").floatValue = PorcionFiguraJugador;
         serializado.ApplyModifiedProperties();
 
-        log.AppendLine($"  {escena.name}: salto {FuerzaSalto} · caida x2.5 · alcance hasta el borde");
+        log.AppendLine($"  {escena.name}: salto {FuerzaSalto} · caída x2.5 · alcance hasta el borde");
     }
 
     private static int VidasDeLaEscena(Scene escena, StringBuilder log)
@@ -841,17 +853,54 @@ public static class BotonesInterfaz
             return;
         }
 
-        Image imagen = hojas.GetComponent<Image>();
+        Sprite columna = UtilesInterfaz.CargarSprite(SpriteHojas);
 
-        if (imagen != null)
+        if (columna == null)
         {
-
-            imagen.raycastTarget = false;
+            log.AppendLine($"[aviso] {escena.name}: falta {SpriteHojas}");
         }
+
+        UtilesInterfaz.Estirar(hojas);
+        UtilesInterfaz.PonerImagen(hojas, null, false, false);
+
+        AspectRatioFitter sobrante = hojas.GetComponent<AspectRatioFitter>();
+
+        if (sobrante != null)
+        {
+            Object.DestroyImmediate(sobrante);
+        }
+
+        ColumnaDeHojas(hojas, "HojaIzquierda", columna, 0f, false);
+        ColumnaDeHojas(hojas, "HojaDerecha", columna, 1f, true);
 
         hojas.SetAsFirstSibling();
 
-        log.AppendLine($"  {escena.name}: las hojas ya no tapan los toques ni los paneles");
+        log.AppendLine($"  {escena.name}: hojas en los dos bordes, sin tapar los toques ni los paneles");
+    }
+
+    private static void ColumnaDeHojas(RectTransform panel, string nombre, Sprite sprite,
+        float borde, bool espejada)
+    {
+        RectTransform rect = UtilesInterfaz.Asegurar(panel, nombre);
+
+        rect.anchorMin = new Vector2(borde, 0f);
+        rect.anchorMax = new Vector2(borde, 1f);
+
+        // El pivote cae justo en el filo del dibujo de hojas, asi que anclado al borde
+        // de la pantalla las hojas arrancan pegadas a la orilla y no en el medio.
+        rect.pivot = new Vector2(FiloDeLasHojas, 0.5f);
+        rect.sizeDelta = new Vector2(rect.sizeDelta.x, 0f);
+        rect.anchoredPosition = Vector2.zero;
+        rect.localRotation = Quaternion.identity;
+        rect.localScale = espejada ? new Vector3(-1f, 1f, 1f) : Vector3.one;
+
+        UtilesInterfaz.PonerImagen(rect, sprite, false, false);
+
+        AspectRatioFitter ajuste = UtilesInterfaz.Componente<AspectRatioFitter>(rect.gameObject);
+        ajuste.aspectMode = AspectRatioFitter.AspectMode.HeightControlsWidth;
+        ajuste.aspectRatio = sprite != null && sprite.rect.height > 0f
+            ? sprite.rect.width / sprite.rect.height
+            : 0.5625f;
     }
 
     private static RectTransform Joystick(Scene escena, RectTransform area, PlayerController jugador, StringBuilder log)
@@ -883,7 +932,7 @@ public static class BotonesInterfaz
 
         if (jugador == null)
         {
-            log.AppendLine($"[aviso] {escena.name}: el joystick quedo sin referencia al jugador");
+            log.AppendLine($"[aviso] {escena.name}: el joystick quedó sin referencia al jugador");
         }
 
         return baseJoystick;
@@ -950,7 +999,7 @@ public static class BotonesInterfaz
         }
         else
         {
-            log.AppendLine($"[aviso] {escena.name}: BotonPowerUp quedo sin GameManager");
+            log.AppendLine($"[aviso] {escena.name}: BotonPowerUp quedó sin GameManager");
         }
 
         RectTransform rectMarco = UtilesInterfaz.Asegurar(boton, "Marco");
@@ -1034,7 +1083,7 @@ public static class BotonesInterfaz
 
         if (jugador == null)
         {
-            log.AppendLine($"[aviso] {escena.name}: {nombre} quedo sin referencia al jugador");
+            log.AppendLine($"[aviso] {escena.name}: {nombre} quedó sin referencia al jugador");
         }
     }
 
@@ -1082,7 +1131,7 @@ public static class BotonesInterfaz
     {
         ("BotonContinuar",     "BotonEmpezar", "CONTINUAR"),
         ("BotonVolver",        "BotonMenu",    "VOLVER"),
-        ("BotonMenuPrincipal", "BotonMenu",    "MENU PRINCIPAL"),
+        ("BotonMenuPrincipal", "BotonMenu",    "MENÚ PRINCIPAL"),
     };
 
     private static readonly (string nombre, string sprite, string rotulo)[] BotonesFinal =
@@ -1223,7 +1272,7 @@ public static class BotonesInterfaz
             nuevo.transform.SetParent(panel, false);
             rect = nuevo.GetComponent<RectTransform>();
 
-            log.AppendLine($"[aviso] {panel.name}: se creo {nombre}; revisa su OnClick en la escena");
+            log.AppendLine($"[aviso] {panel.name}: se creó {nombre}; revisa su OnClick en la escena");
         }
 
         Sprite sprite = UtilesInterfaz.CargarSprite(rutaSprite);
@@ -1232,18 +1281,7 @@ public static class BotonesInterfaz
         Button boton = UtilesInterfaz.Componente<Button>(rect.gameObject);
         boton.targetGraphic = imagen;
 
-        TMP_Text texto = UtilesInterfaz.TextoDeBoton(boton);
-
-        if (texto == null)
-        {
-            texto = UtilesInterfaz.PonerTexto(UtilesInterfaz.Asegurar(rect, "Texto"), rotulo, LetraBoton,
-                TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
-        }
-
-        UtilesInterfaz.Estirar(texto.rectTransform);
-        texto.text = rotulo;
-        UtilesInterfaz.Formato(texto, LetraBoton, TextAlignmentOptions.Center, UtilesInterfaz.Tinta);
-        texto.gameObject.SetActive(true);
+        UtilesInterfaz.TextoCentrado(boton, sprite, rotulo, LetraBoton, UtilesInterfaz.Tinta);
 
         return rect;
     }

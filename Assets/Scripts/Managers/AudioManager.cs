@@ -7,7 +7,7 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
-    [Header("Volumenes")]
+    [Header("Volúmenes")]
     [SerializeField] private float volumenMusica = 0.5f;
     [SerializeField] private float volumenEfectos = 1f;
 
@@ -117,7 +117,7 @@ public class AudioManager : MonoBehaviour
 
         if (clip == null)
         {
-            Debug.LogWarning("No se encontro el audio: Assets/Resources/Music/" + nombre);
+            Debug.LogWarning("No se encontró el audio: Assets/Resources/Music/" + nombre);
         }
 
         return clip;

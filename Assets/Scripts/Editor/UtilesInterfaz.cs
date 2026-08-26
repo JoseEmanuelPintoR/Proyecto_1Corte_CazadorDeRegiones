@@ -16,6 +16,8 @@ public static class UtilesInterfaz
     public static readonly Color Tinta = new Color(0.16f, 0.16f, 0.14f);
     public static readonly Color TintaClara = new Color(0.99f, 0.99f, 0.96f);
 
+    private const float SombraBoton = 8f;
+
     public static Sprite CargarSprite(string ruta)
     {
         return AssetDatabase.LoadAssetAtPath<Sprite>(ruta);
@@ -436,5 +438,58 @@ public static class UtilesInterfaz
     public static TMP_Text TextoDeBoton(Button boton)
     {
         return boton != null ? boton.GetComponentInChildren<TMP_Text>(true) : null;
+    }
+
+    public static RectTransform PlacaDeBoton(RectTransform boton, Sprite sprite)
+    {
+        RectTransform placa = Asegurar(boton, "Placa");
+        Estirar(placa);
+        AjustarProporcion(placa, sprite);
+        return placa;
+    }
+
+    public static TMP_Text TextoCentrado(Button boton, Sprite sprite, string rotulo,
+        float tamano, Color color)
+    {
+        if (boton == null)
+        {
+            return null;
+        }
+
+        TMP_Text texto = TextoDeBoton(boton);
+
+        if (texto == null)
+        {
+            texto = PonerTexto(Asegurar(boton.transform, "Texto"), rotulo ?? "", tamano,
+                TextAlignmentOptions.Center, color);
+        }
+        else if (rotulo != null)
+        {
+            texto.text = rotulo;
+        }
+
+        RectTransform rect = texto.rectTransform;
+
+        if (sprite == null)
+        {
+            Estirar(rect);
+        }
+        else
+        {
+            rect.SetParent(PlacaDeBoton(boton.transform as RectTransform, sprite), false);
+
+            rect.anchorMin = new Vector2(0f, SombraBoton / sprite.rect.height);
+            rect.anchorMax = new Vector2(1f - SombraBoton / sprite.rect.width, 1f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
+            rect.localScale = Vector3.one;
+            rect.localRotation = Quaternion.identity;
+        }
+
+        Formato(texto, tamano, TextAlignmentOptions.Center, color);
+        texto.gameObject.SetActive(true);
+
+        return texto;
     }
 }

@@ -78,7 +78,7 @@ public static class AccesoriosCondor
         },
     };
 
-    [MenuItem("Herramientas/Cazador de Regiones/6 · Accesorios del condor", false, 105)]
+    [MenuItem("Herramientas/Cazador de Regiones/6 · Accesorios del cóndor", false, 105)]
     public static void MenuAccesorios()
     {
         if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
@@ -87,7 +87,7 @@ public static class AccesoriosCondor
         }
 
         StringBuilder log = new StringBuilder();
-        log.AppendLine("=== Accesorios del condor ===");
+        log.AppendLine("=== Accesorios del cóndor ===");
 
         if (!ImportarAccesorios(log))
         {
@@ -116,7 +116,7 @@ public static class AccesoriosCondor
 
         if (importador == null)
         {
-            log.AppendLine($"[error] No esta {ruta}");
+            log.AppendLine($"[error] No está {ruta}");
             return false;
         }
 
@@ -125,8 +125,8 @@ public static class AccesoriosCondor
 
         if (ajustes.spriteAlignment != (int)SpriteAlignment.Custom)
         {
-            log.AppendLine($"[error] {Path.GetFileNameWithoutExtension(ruta)} todavia no tiene el pivote calculado.");
-            log.AppendLine("        Corre antes el paso 4 (Poner el condor animado).");
+            log.AppendLine($"[error] {Path.GetFileNameWithoutExtension(ruta)} todavía no tiene el pivote calculado.");
+            log.AppendLine("        Corre antes el paso 4 (Poner el cóndor animado).");
             return false;
         }
 
@@ -179,7 +179,7 @@ public static class AccesoriosCondor
 
         if (importador == null)
         {
-            log.AppendLine($"[aviso] No esta {ruta}");
+            log.AppendLine($"[aviso] No está {ruta}");
             return false;
         }
 
@@ -306,7 +306,7 @@ public static class AccesoriosCondor
             LlenarSkins(serializado.FindProperty("skins"));
             serializado.ApplyModifiedProperties();
 
-            log.AppendLine($"  {escena.name}: condor con las 3 vistas por accesorio");
+            log.AppendLine($"  {escena.name}: cóndor con las 3 vistas por accesorio");
 
             EditorSceneManager.MarkSceneDirty(escena);
             EditorSceneManager.SaveScene(escena);

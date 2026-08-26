@@ -17,7 +17,7 @@ public class ObjetoCaida : MonoBehaviour
     [SerializeField] private float velocidadMaximaPowerUp = 2f;
     [SerializeField] private float factorGravedadPowerUp = 0.25f;
 
-    [Header("Limites horizontales")]
+    [Header("Límites horizontales")]
     [Tooltip("Radio del objeto, para que no quede medio afuera al llegar al borde.")]
     [SerializeField] private float radioObjeto = 0.5f;
 

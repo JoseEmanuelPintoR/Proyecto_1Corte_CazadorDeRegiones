@@ -45,7 +45,7 @@ public static class TipografiaProyecto
         "NombreIntegrante", "RolIntegrante"
     };
 
-    [MenuItem("Herramientas/Cazador de Regiones/5 · Aplicar tipografia", false, 104)]
+    [MenuItem("Herramientas/Cazador de Regiones/5 · Aplicar tipografía", false, 104)]
     public static void MenuAplicarTipografia()
     {
         if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
@@ -54,7 +54,7 @@ public static class TipografiaProyecto
         }
 
         StringBuilder log = new StringBuilder();
-        log.AppendLine("=== Tipografia ===");
+        log.AppendLine("=== Tipografía ===");
 
         TMP_FontAsset titulos = ObtenerFuente(Titulos, log);
         TMP_FontAsset botones = ObtenerFuente(Botones, log);
@@ -78,7 +78,7 @@ public static class TipografiaProyecto
 
         if (existente != null)
         {
-            log.AppendLine($"  {familia.uso}: {familia.asset} (ya existia)");
+            log.AppendLine($"  {familia.uso}: {familia.asset} (ya existía)");
             return existente;
         }
 
@@ -86,7 +86,7 @@ public static class TipografiaProyecto
 
         if (origen == null)
         {
-            log.AppendLine($"[error] No esta {CarpetaFuentes}/{familia.archivo}.ttf");
+            log.AppendLine($"[error] No está {CarpetaFuentes}/{familia.archivo}.ttf");
             return null;
         }
 
@@ -100,14 +100,14 @@ public static class TipografiaProyecto
         catch (System.Exception error)
         {
             log.AppendLine($"[error] No se pudo generar {familia.asset}: {error.Message}");
-            log.AppendLine($"        Generalo a mano con Window > TextMeshPro > Font Asset Creator");
-            log.AppendLine($"        y guardalo como {rutaAsset}");
+            log.AppendLine($"        Genéralo a mano con Window > TextMeshPro > Font Asset Creator");
+            log.AppendLine($"        y guárdalo como {rutaAsset}");
             return null;
         }
 
         if (creada == null)
         {
-            log.AppendLine($"[error] TMP no genero {familia.asset}");
+            log.AppendLine($"[error] TMP no generó {familia.asset}");
             return null;
         }
 
@@ -176,7 +176,7 @@ public static class TipografiaProyecto
                 }
             }
 
-            log.AppendLine($"  {escena.name}: {enTitulos} titulos · {enBotones} botones · {enCuerpo} cuerpo");
+            log.AppendLine($"  {escena.name}: {enTitulos} títulos · {enBotones} botones · {enCuerpo} cuerpo");
 
             EditorSceneManager.MarkSceneDirty(escena);
             EditorSceneManager.SaveScene(escena);

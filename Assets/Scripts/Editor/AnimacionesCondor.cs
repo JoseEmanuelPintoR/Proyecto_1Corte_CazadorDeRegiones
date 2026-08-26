@@ -28,7 +28,7 @@ public static class AnimacionesCondor
 
     public static void ImportarVistas(StringBuilder log)
     {
-        log.AppendLine("--- Condor · importar vistas ---");
+        log.AppendLine("--- Cóndor · importar vistas ---");
 
         foreach (string vista in new[] { VistaFrente, VistaLado, VistaTresCuartos })
         {
@@ -37,7 +37,7 @@ public static class AnimacionesCondor
 
             if (importador == null)
             {
-                log.AppendLine($"[aviso] No se encontro {ruta}");
+                log.AppendLine($"[aviso] No se encontró {ruta}");
                 continue;
             }
 
@@ -163,7 +163,7 @@ public static class AnimacionesCondor
 
     public static AnimatorController CrearAnimaciones(StringBuilder log)
     {
-        log.AppendLine("--- Condor · clips y controlador ---");
+        log.AppendLine("--- Cóndor · clips y controlador ---");
 
         CrearCarpeta("Assets/Animaciones");
         CrearCarpeta(CarpetaAnimaciones);
@@ -174,7 +174,7 @@ public static class AnimacionesCondor
 
         if (frente == null || lado == null || tresCuartos == null)
         {
-            log.AppendLine("[error] Faltan vistas del condor; importa el arte primero");
+            log.AppendLine("[error] Faltan vistas del cóndor; importa el arte primero");
             return null;
         }
 
